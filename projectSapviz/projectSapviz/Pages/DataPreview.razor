@@ -1,5 +1,6 @@
 ﻿@page "/data"
 @using projectSapviz.Services
+@using System.Reflection
 @inject BacDataService BacData
 
 <div class="data-page">
@@ -23,39 +24,105 @@
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Kód</th>
-                        <th>Iskola</th>
-                        <th>Előző beiratkozás</th>
-                        <th>Oktatási forma</th>
-                        <th>Specializáció</th>
-                        <th>Román szint</th>
-                        <th>Anyanyelv</th>
-                        <th>Idegen nyelv</th>
-                        <th>Nyelvi jegyek</th>
-                        <th>Kötelező tárgy</th>
-                        <th>Választott tárgy</th>
-                        <th>TIC</th>
-                        <th>Átlag</th>
-                        <th>Átment</th>
-                        <th>Anyanyelv szint</th>
-                        <th>Megye</th>
-                        <th>Év</th>
-                        <th>Iskola teljes neve</th>
-                        <th>Város</th>
-                        <th>Közeg</th>
-                        <th>Iskola kód</th>
-                        <th>Magyar név</th>
-                        <th>Város (RO)</th>
-                        <th>Város (HU)</th>
-                        <th>Megye (RO)</th>
-                        <th>Megye (HU)</th>
-                        <th>Iskola típus</th>
-                        <th>Kötelező jegy</th>
-                        <th>Választott jegy</th>
-                        <th>Román jegy</th>
-                        <th>Anyanyelv jegy</th>
-                        <th>Nemzetiség</th>
-                        <th>Specializáció típus</th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.Code))" class="@GetSortClass(nameof(BacRecord.Code))">
+                            Kód
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.School))" class="@GetSortClass(nameof(BacRecord.School))">
+                            Iskola
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.PreviousProm))" class="@GetSortClass(nameof(BacRecord.PreviousProm))">
+                            Előző beiratkozás
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.EducationForm))" class="@GetSortClass(nameof(BacRecord.EducationForm))">
+                            Oktatási forma
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.Specialization))" class="@GetSortClass(nameof(BacRecord.Specialization))">
+                            Specializáció
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.RomanianLevel))" class="@GetSortClass(nameof(BacRecord.RomanianLevel))">
+                            Román szint
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.NativeSubject))" class="@GetSortClass(nameof(BacRecord.NativeSubject))">
+                            Anyanyelv
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.ExtraLanguage))" class="@GetSortClass(nameof(BacRecord.ExtraLanguage))">
+                            Idegen nyelv
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.ExtraLanguageGrades))" class="@GetSortClass(nameof(BacRecord.ExtraLanguageGrades))">
+                            Nyelvi jegyek
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.MandatorySubject))" class="@GetSortClass(nameof(BacRecord.MandatorySubject))">
+                            Kötelező tárgy
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.ChosenSubject))" class="@GetSortClass(nameof(BacRecord.ChosenSubject))">
+                            Választott tárgy
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.Tic))" class="@GetSortClass(nameof(BacRecord.Tic))">
+                            TIC
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.Avg))" class="@GetSortClass(nameof(BacRecord.Avg))">
+                            Átlag
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.Passed))" class="@GetSortClass(nameof(BacRecord.Passed))">
+                            Átment
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.NativeLevel))" class="@GetSortClass(nameof(BacRecord.NativeLevel))">
+                            Anyanyelv szint
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.County))" class="@GetSortClass(nameof(BacRecord.County))">
+                            Megye
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.Year))" class="@GetSortClass(nameof(BacRecord.Year))">
+                            Év
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.FullSchoolName))" class="@GetSortClass(nameof(BacRecord.FullSchoolName))">
+                            Iskola teljes neve
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.City))" class="@GetSortClass(nameof(BacRecord.City))">
+                            Város
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.Medium))" class="@GetSortClass(nameof(BacRecord.Medium))">
+                            Közeg
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.SchoolCode))" class="@GetSortClass(nameof(BacRecord.SchoolCode))">
+                            Iskola kód
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.NameHu))" class="@GetSortClass(nameof(BacRecord.NameHu))">
+                            Magyar név
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.CityRo))" class="@GetSortClass(nameof(BacRecord.CityRo))">
+                            Város (RO)
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.CityHu))" class="@GetSortClass(nameof(BacRecord.CityHu))">
+                            Város (HU)
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.CountyRo))" class="@GetSortClass(nameof(BacRecord.CountyRo))">
+                            Megye (RO)
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.CountyHu))" class="@GetSortClass(nameof(BacRecord.CountyHu))">
+                            Megye (HU)
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.SchoolType))" class="@GetSortClass(nameof(BacRecord.SchoolType))">
+                            Iskola típus
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.MandatoryGradeFinal))" class="@GetSortClass(nameof(BacRecord.MandatoryGradeFinal))">
+                            Kötelező jegy
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.ChosenGradeFinal))" class="@GetSortClass(nameof(BacRecord.ChosenGradeFinal))">
+                            Választott jegy
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.RomanianGradeFinal))" class="@GetSortClass(nameof(BacRecord.RomanianGradeFinal))">
+                            Román jegy
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.NativeGradeFinal))" class="@GetSortClass(nameof(BacRecord.NativeGradeFinal))">
+                            Anyanyelv jegy
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.Nationality))" class="@GetSortClass(nameof(BacRecord.Nationality))">
+                            Nemzetiség
+                        </th>
+                        <th @onclick="() => SortBy(nameof(BacRecord.SpecializationType))" class="@GetSortClass(nameof(BacRecord.SpecializationType))">
+                            Specializáció típus
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -125,13 +192,18 @@
 
 @code {
     private List<BacRecord>? records;
+    private List<BacRecord> sortedRecords = new();
     private List<BacRecord> currentRecords = new();
     private string? errorMessage;
     private int pageSize = 10;
     private int currentPage = 0;
-    private int totalPages => records == null ? 0 : (int)Math.Ceiling(records.Count / (double)pageSize);
+    private int totalPages => sortedRecords.Count == 0 ? 0 : (int)Math.Ceiling(sortedRecords.Count / (double)pageSize);
     private int startPage => Math.Max(0, Math.Min(currentPage - 2, totalPages - 5));
     private int endPage => Math.Min(startPage + 4, totalPages - 1);
+
+    // Rendezési változók
+    private string currentSortColumn = "Code"; // Alapértelmezett rendezési oszlop
+    private bool sortAscending = true; // Növekvő rendezés alapértelmezetten
 
     protected override async Task OnInitializedAsync()
     {
@@ -143,7 +215,7 @@
         try
         {
             records = await BacData.GetRecordsAsync();
-            UpdateCurrentRecords();
+            ApplySorting();
         }
         catch (Exception ex)
         {
@@ -151,12 +223,70 @@
         }
     }
 
-    private void UpdateCurrentRecords()
+    private void SortBy(string columnName)
+    {
+        // Ha ugyanarra az oszlopra kattintunk, megfordítjuk a rendezési irányt
+        if (columnName == currentSortColumn)
+        {
+            sortAscending = !sortAscending;
+        }
+        else
+        {
+            currentSortColumn = columnName;
+            sortAscending = true; // Új oszlopnál növekvő rendezés
+        }
+
+        ApplySorting();
+    }
+
+    private void ApplySorting()
     {
         if (records == null)
             return;
 
-        currentRecords = records
+        // Reflection használata a dinamikus tulajdonság alapú rendezéshez
+        PropertyInfo prop = typeof(BacRecord).GetProperty(currentSortColumn);
+
+        if (prop != null)
+        {
+            if (sortAscending)
+            {
+                sortedRecords = records.OrderBy(r =>
+                {
+                    var value = prop.GetValue(r);
+                    // Null értékek kezelése
+                    return value ?? string.Empty;
+                }).ToList();
+            }
+            else
+            {
+                sortedRecords = records.OrderByDescending(r =>
+                {
+                    var value = prop.GetValue(r);
+                    // Null értékek kezelése
+                    return value ?? string.Empty;
+                }).ToList();
+            }
+
+            currentPage = 0; // Rendezésnél visszalépünk az első oldalra
+            UpdateCurrentRecords();
+        }
+    }
+
+    private string GetSortClass(string columnName)
+    {
+        if (columnName != currentSortColumn)
+            return "sortable";
+
+        return sortAscending ? "sortable sort-asc" : "sortable sort-desc";
+    }
+
+    private void UpdateCurrentRecords()
+    {
+        if (sortedRecords.Count == 0)
+            return;
+
+        currentRecords = sortedRecords
             .Skip(currentPage * pageSize)
             .Take(pageSize)
             .ToList();
@@ -188,11 +318,11 @@
 
     private string GetPaginationText()
     {
-        if (records == null || records.Count == 0)
+        if (sortedRecords.Count == 0)
             return "Nincs megjeleníthető adat";
 
         int start = currentPage * pageSize + 1;
-        int end = Math.Min(start + pageSize - 1, records.Count);
-        return $"{start}-{end} / {records.Count} rekord";
+        int end = Math.Min(start + pageSize - 1, sortedRecords.Count);
+        return $"{start}-{end} / {sortedRecords.Count} rekord";
     }
 }

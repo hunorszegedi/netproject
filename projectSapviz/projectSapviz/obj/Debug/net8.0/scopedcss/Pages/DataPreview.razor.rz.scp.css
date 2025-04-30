@@ -1,4 +1,4 @@
-/* DataPreview.razor.css - Egyszerű, kompakt stílus sok adathoz */
+/* DataPreview.razor.css - Egyszerű, kompakt stílus rendezési funkcióval */
 
 .data-page[b-01sbtn7fho] {
     padding: 1rem;
@@ -38,7 +38,40 @@ h3[b-01sbtn7fho] {
         border-bottom: 1px solid #e0e0e0;
         font-size: 0.75rem;
         z-index: 1;
+        cursor: pointer; /* Kurzor mutatja hogy kattintható */
+        user-select: none; /* Megakadályozza a szöveg kijelölést */
+        transition: background-color 0.15s ease;
     }
+
+        .data-table th:hover[b-01sbtn7fho] {
+            background-color: #eee;
+        }
+
+        /* Rendezési stílusok */
+        .data-table th.sortable[b-01sbtn7fho] {
+            position: relative;
+            padding-right: 1.2rem; /* Hely a nyílnak */
+        }
+
+            .data-table th.sortable[b-01sbtn7fho]::after {
+                content: '\2195'; /* Fel-le nyíl Unicode karakter */
+                position: absolute;
+                right: 6px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 0.7rem;
+                opacity: 0.5;
+            }
+
+        .data-table th.sort-asc[b-01sbtn7fho]::after {
+            content: '\2191'; /* Felfelé nyíl Unicode karakter */
+            opacity: 1;
+        }
+
+        .data-table th.sort-desc[b-01sbtn7fho]::after {
+            content: '\2193'; /* Lefelé nyíl Unicode karakter */
+            opacity: 1;
+        }
 
     .data-table td[b-01sbtn7fho] {
         padding: 0.4rem 0.6rem;
@@ -127,6 +160,14 @@ h3[b-01sbtn7fho] {
     background-color: #ffebee;
     color: #c62828;
     border: 1px solid #ffcdd2;
+}
+
+/* Aktív rendezési oszlop kiemelése */
+.data-table th.sort-asc[b-01sbtn7fho],
+.data-table th.sort-desc[b-01sbtn7fho] {
+    background-color: #e8eaf6;
+    color: #3949ab;
+    font-weight: 600;
 }
 
 /* Reszponzív beállítások */

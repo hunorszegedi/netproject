@@ -1054,3 +1054,4 @@ C:\Users\Vivobook\Desktop\project\projectSapviz\projectSapviz\obj\Debug\net8.0\c
 C:\Users\Vivobook\Desktop\project\projectSapviz\projectSapviz\obj\Debug\net8.0\scopedcss\Pages\DataPreview.razor.rz.scp.css
 C:\Users\Vivobook\Desktop\project\projectSapviz\projectSapviz\obj\Debug\net8.0\scopedcss\Pages\UserGrades.razor.rz.scp.css
 C:\Users\Vivobook\Desktop\project\projectSapviz\projectSapviz\obj\Debug\net8.0\scopedcss\Pages\Home.razor.rz.scp.css
+C:\Users\Vivobook\Desktop\project\projectSapviz\projectSapviz\obj\Debug\net8.0\projectSapviz.sourcelink.json
