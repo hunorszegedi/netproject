@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("projectSapviz")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9bce0ea2f0403e437e585bf9cd7277a1676595b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9481491d79aed84ad6c13a3d6cebe72b9af8bb5d")]
 [assembly: System.Reflection.AssemblyProductAttribute("projectSapviz")]
 [assembly: System.Reflection.AssemblyTitleAttribute("projectSapviz")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

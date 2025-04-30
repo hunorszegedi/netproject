@@ -1,4 +1,4 @@
-﻿/* DataPreview.razor.css - Egyszerű, kompakt stílus rendezési funkcióval */
+﻿/* DataPreview.razor.css - Egyszerű, kompakt stílus rendezési és keresési funkciókkal */
 
 .data-page {
     padding: 1rem;
@@ -10,6 +10,69 @@ h3 {
     font-size: 1.5rem;
     font-weight: 500;
     color: #333;
+}
+
+/* Keresés mező stílusok */
+.search-container {
+    margin-bottom: 1rem;
+}
+
+.search-box {
+    position: relative;
+    max-width: 400px;
+    margin-bottom: 0.5rem;
+}
+
+    .search-box input {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        padding-left: 2rem; /* Hely a keresés ikonnak */
+        padding-right: 2rem; /* Hely a törlés gombnak */
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+        .search-box input:focus {
+            border-color: #3f51b5;
+            box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.15);
+        }
+
+.search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    color: #666;
+    pointer-events: none; /* Ne akadályozza a kattintást a mezőre */
+}
+
+.search-clear {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: #999;
+    padding: 0.25rem;
+    border-radius: 50%;
+    line-height: 1;
+}
+
+    .search-clear:hover {
+        background-color: #f0f0f0;
+        color: #666;
+    }
+
+.search-results {
+    font-size: 0.8rem;
+    color: #666;
 }
 
 /* Táblázat stílusok */
@@ -170,6 +233,12 @@ h3 {
     font-weight: 600;
 }
 
+/* Találatok kiemelése */
+.highlight {
+    background-color: #fff9c4;
+    font-weight: 500;
+}
+
 /* Reszponzív beállítások */
 @media (max-width: 768px) {
     .pagination {
@@ -184,4 +253,8 @@ h3 {
         .data-table th, .data-table td {
             padding: 0.3rem 0.4rem;
         }
+
+    .search-box {
+        max-width: 100%;
+    }
 }

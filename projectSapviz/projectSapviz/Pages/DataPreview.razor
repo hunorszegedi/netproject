@@ -20,6 +20,27 @@
     }
     else
     {
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text"
+                       placeholder="Keresés..."
+                       @bind-value="searchText"
+                       @bind-value:event="oninput"
+                       @onkeyup="HandleSearch" />
+                <span class="search-icon">🔍</span>
+                @if (!string.IsNullOrEmpty(searchText))
+                {
+                    <button class="search-clear" @onclick="ClearSearch">✖</button>
+                }
+            </div>
+            <div class="search-results">
+                @if (!string.IsNullOrEmpty(searchText))
+                {
+                    <span>Találatok: <b>@filteredRecords.Count</b> rekord</span>
+                }
+            </div>
+        </div>
+
         <div class="table-container">
             <table class="data-table">
                 <thead>
@@ -192,6 +213,7 @@
 
 @code {
     private List<BacRecord>? records;
+    private List<BacRecord> filteredRecords = new();
     private List<BacRecord> sortedRecords = new();
     private List<BacRecord> currentRecords = new();
     private string? errorMessage;
@@ -205,8 +227,17 @@
     private string currentSortColumn = "Code"; // Alapértelmezett rendezési oszlop
     private bool sortAscending = true; // Növekvő rendezés alapértelmezetten
 
+    // Keresési változók
+    private string searchText = string.Empty;
+    private System.Timers.Timer? searchTimer;
+
     protected override async Task OnInitializedAsync()
     {
+        // Keresési időzítő beállítása (300ms késleltetés a keresés végrehajtásához)
+        searchTimer = new System.Timers.Timer(300);
+        searchTimer.Elapsed += SearchTimerElapsed;
+        searchTimer.AutoReset = false;
+
         await LoadData();
     }
 
@@ -215,12 +246,74 @@
         try
         {
             records = await BacData.GetRecordsAsync();
+            filteredRecords = records.ToList();
             ApplySorting();
         }
         catch (Exception ex)
         {
             errorMessage = ex.Message;
         }
+    }
+
+    private void HandleSearch(KeyboardEventArgs e)
+    {
+        // Időzítő újraindítása - ez késlelteti a keresést, hogy ne történjen
+        // minden billentyűleütésnél, csak amikor a felhasználó szünetet tart a gépelésben
+        searchTimer?.Stop();
+        searchTimer?.Start();
+    }
+
+    private void SearchTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
+    {
+        // A keresés végrehajtása az időzítő lejárta után
+        InvokeAsync(() =>
+        {
+            PerformSearch();
+        });
+    }
+
+    private void PerformSearch()
+    {
+        if (records == null)
+            return;
+
+        if (string.IsNullOrWhiteSpace(searchText))
+        {
+            // Ha üres a keresőmező, minden rekordot mutatunk
+            filteredRecords = records.ToList();
+        }
+        else
+        {
+            // Keresés az összes tulajdonságban
+            string searchLower = searchText.ToLower();
+
+            filteredRecords = records.Where(record =>
+            {
+                // Végigmegyünk az összes tulajdonságon és keresünk bennük
+                foreach (PropertyInfo prop in typeof(BacRecord).GetProperties())
+                {
+                    var value = prop.GetValue(record);
+                    if (value != null)
+                    {
+                        // Ha a tulajdonság értéke tartalmazza a keresett szöveget
+                        if (value.ToString()?.ToLower().Contains(searchLower) == true)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }).ToList();
+        }
+
+        currentPage = 0; // Kereséskor visszatérünk az első oldalra
+        ApplySorting(); // Újra alkalmazzuk a rendezést a szűrt listára
+    }
+
+    private void ClearSearch()
+    {
+        searchText = string.Empty;
+        PerformSearch();
     }
 
     private void SortBy(string columnName)
@@ -241,7 +334,7 @@
 
     private void ApplySorting()
     {
-        if (records == null)
+        if (filteredRecords.Count == 0)
             return;
 
         // Reflection használata a dinamikus tulajdonság alapú rendezéshez
@@ -251,7 +344,7 @@
         {
             if (sortAscending)
             {
-                sortedRecords = records.OrderBy(r =>
+                sortedRecords = filteredRecords.OrderBy(r =>
                 {
                     var value = prop.GetValue(r);
                     // Null értékek kezelése
@@ -260,7 +353,7 @@
             }
             else
             {
-                sortedRecords = records.OrderByDescending(r =>
+                sortedRecords = filteredRecords.OrderByDescending(r =>
                 {
                     var value = prop.GetValue(r);
                     // Null értékek kezelése
@@ -268,7 +361,6 @@
                 }).ToList();
             }
 
-            currentPage = 0; // Rendezésnél visszalépünk az első oldalra
             UpdateCurrentRecords();
         }
     }
@@ -324,5 +416,10 @@
         int start = currentPage * pageSize + 1;
         int end = Math.Min(start + pageSize - 1, sortedRecords.Count);
         return $"{start}-{end} / {sortedRecords.Count} rekord";
+    }
+
+    public void Dispose()
+    {
+        searchTimer?.Dispose();
     }
 }
