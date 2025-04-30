@@ -2,6 +2,7 @@
 @inject projectSapviz.Services.StudentSaveService StudentSaver
 @inject BacDataService BacData
 @using projectSapviz.Models;
+@inject NavigationManager NavigationManager
 
 <div class="form-container">
     <h3>Saját féléves jegyek megadása</h3>
@@ -10,7 +11,7 @@
     {
         <div class="success-message">
             Köszönjük! Az adatok mentésre kerültek (helyileg).
-            <button @onclick="ShowAnalysis">Eredmények elemzése</button>
+            <button @onclick="NavigateToComparison" class="analyze-button">Eredmények elemzése</button>
         </div>
     }
     else
@@ -244,8 +245,8 @@
         }
     }
 
-    private void ShowAnalysis()
+    private void NavigateToComparison()
     {
-        showAnalysis = true;
+        NavigationManager.NavigateTo("/grade-comparison");
     }
 }

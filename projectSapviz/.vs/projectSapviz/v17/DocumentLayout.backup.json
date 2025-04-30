@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\layout\\navmenu.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\layout\\navmenu.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\services\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\services\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\pages\\users.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\pages\\users.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\pages\\users.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\pages\\users.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\pages\\home.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\pages\\home.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,53 +35,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "NavMenu.razor.css",
-              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Layout\\NavMenu.razor.css",
-              "RelativeDocumentMoniker": "projectSapviz\\Layout\\NavMenu.razor.css",
-              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Layout\\NavMenu.razor.css",
-              "RelativeToolTip": "projectSapviz\\Layout\\NavMenu.razor.css",
-              "ViewState": "AgIAAFUBAAAAAAAAAAAqwG4BAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-04-30T14:04:58.339Z",
+              "Title": "AuthenticationService.cs",
+              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Services\\AuthenticationService.cs",
+              "RelativeDocumentMoniker": "projectSapviz\\Services\\AuthenticationService.cs",
+              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Services\\AuthenticationService.cs",
+              "RelativeToolTip": "projectSapviz\\Services\\AuthenticationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-30T15:08:47.753Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "NavMenu.razor",
-              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Layout\\NavMenu.razor",
-              "RelativeDocumentMoniker": "projectSapviz\\Layout\\NavMenu.razor",
-              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Layout\\NavMenu.razor",
-              "RelativeToolTip": "projectSapviz\\Layout\\NavMenu.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-30T14:04:37.768Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Users.razor",
-              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\Users.razor",
-              "RelativeDocumentMoniker": "projectSapviz\\Pages\\Users.razor",
-              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\Users.razor",
-              "RelativeToolTip": "projectSapviz\\Pages\\Users.razor",
-              "ViewState": "AgIAAFUAAAAAAAAAAAAIwGwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-30T13:54:46.953Z",
+              "Title": "Home.razor.css",
+              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\Home.razor.css",
+              "RelativeDocumentMoniker": "projectSapviz\\Pages\\Home.razor.css",
+              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\Home.razor.css",
+              "RelativeToolTip": "projectSapviz\\Pages\\Home.razor.css",
+              "ViewState": "AgIAADQAAAAAAAAAAAAqwD8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-04-30T15:02:16.249Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Users.razor.css",
-              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\Users.razor.css",
-              "RelativeDocumentMoniker": "projectSapviz\\Pages\\Users.razor.css",
-              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\Users.razor.css",
-              "RelativeToolTip": "projectSapviz\\Pages\\Users.razor.css",
-              "ViewState": "AgIAAJIAAAAAAAAAAAAqwKUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-04-30T13:47:40.675Z",
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "projectSapviz\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\Home.razor",
+              "RelativeToolTip": "projectSapviz\\Pages\\Home.razor",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-30T15:01:58.33Z",
               "EditorCaption": ""
             }
           ]

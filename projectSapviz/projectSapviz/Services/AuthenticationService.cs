@@ -4,7 +4,7 @@
     {
         private readonly Dictionary<string, string> _users = new()
         {
-            { "diak@example.com", "1234" }
+            { "szegedihunor@example.com", "12345" }
         };
 
         public string? CurrentUser { get; private set; }

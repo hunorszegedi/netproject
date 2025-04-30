@@ -15,6 +15,21 @@
     }
     else
     {
+        <div class="comparison-options">
+            <h4>Összehasonlítási beállítások</h4>
+            <div class="filter-container">
+                <div class="filter-option">
+                    <input type="checkbox" id="sameSpecialization" @bind="@filterBySameSpecialization" />
+                    <label for="sameSpecialization">Csak azonos szakon tanulók</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="sameSchool" @bind="@filterBySameSchool" />
+                    <label for="sameSchool">Csak azonos iskolába járók</label>
+                </div>
+                <button class="apply-filter-button" @onclick="ApplyFilters">Szűrők alkalmazása</button>
+            </div>
+        </div>
+
         <div class="comparison-results">
             <div class="student-info">
                 <h4>Diák adatok</h4>
@@ -25,29 +40,50 @@
 
             <div class="bac-average-comparison">
                 <h4>Érettségi átlagok összehasonlítása</h4>
+                <div class="comparison-scope">
+                    <p>Jelenleg összehasonlítva: <strong>@GetComparisonScopeText()</strong></p>
+                </div>
                 <div class="bac-averages">
                     <div class="bac-average-card">
                         <h5>Kötelező tárgy (Matematika)</h5>
                         <p><strong>Saját jegy:</strong> @GetSubjectGrade("matematika")</p>
-                        <p><strong>Érettségi átlag:</strong> @MandatoryExamAverage.ToString("F2")</p>
-                        <p><strong>Eltérés:</strong> @(Math.Abs(double.Parse(GetSubjectGrade("matematika")) - MandatoryExamAverage).ToString("F2"))</p>
+                        <p><strong>Érettségi átlag (összes):</strong> @MandatoryExamAverage.ToString("F2")</p>
+                        @if (filteredMandatoryExamAverage.HasValue)
+                        {
+                            <p><strong>Érettségi átlag (szűrt):</strong> @filteredMandatoryExamAverage.Value.ToString("F2")</p>
+                            <p><strong>Eltérés (szűrt):</strong> @(Math.Abs(double.Parse(GetSubjectGrade("matematika")) - filteredMandatoryExamAverage.Value).ToString("F2"))</p>
+                        }
+                        <p><strong>Eltérés (összes):</strong> @(Math.Abs(double.Parse(GetSubjectGrade("matematika")) - MandatoryExamAverage).ToString("F2"))</p>
                     </div>
                     <div class="bac-average-card">
                         <h5>Román nyelv</h5>
                         <p><strong>Saját jegy:</strong> @GetSubjectGrade("roman")</p>
-                        <p><strong>Érettségi átlag:</strong> @RomanianExamAverage.ToString("F2")</p>
-                        <p><strong>Eltérés:</strong> @(Math.Abs(double.Parse(GetSubjectGrade("roman")) - RomanianExamAverage).ToString("F2"))</p>
+                        <p><strong>Érettségi átlag (összes):</strong> @RomanianExamAverage.ToString("F2")</p>
+                        @if (filteredRomanianExamAverage.HasValue)
+                        {
+                            <p><strong>Érettségi átlag (szűrt):</strong> @filteredRomanianExamAverage.Value.ToString("F2")</p>
+                            <p><strong>Eltérés (szűrt):</strong> @(Math.Abs(double.Parse(GetSubjectGrade("roman")) - filteredRomanianExamAverage.Value).ToString("F2"))</p>
+                        }
+                        <p><strong>Eltérés (összes):</strong> @(Math.Abs(double.Parse(GetSubjectGrade("roman")) - RomanianExamAverage).ToString("F2"))</p>
                     </div>
                     <div class="bac-average-card">
                         <h5>Anyanyelv (Magyar)</h5>
                         <p><strong>Saját jegy:</strong> @GetSubjectGrade("magyar")</p>
-                        <p><strong>Érettségi átlag:</strong> @NativeExamAverage.ToString("F2")</p>
-                        <p><strong>Eltérés:</strong> @(Math.Abs(double.Parse(GetSubjectGrade("magyar")) - NativeExamAverage).ToString("F2"))</p>
+                        <p><strong>Érettségi átlag (összes):</strong> @NativeExamAverage.ToString("F2")</p>
+                        @if (filteredNativeExamAverage.HasValue)
+                        {
+                            <p><strong>Érettségi átlag (szűrt):</strong> @filteredNativeExamAverage.Value.ToString("F2")</p>
+                            <p><strong>Eltérés (szűrt):</strong> @(Math.Abs(double.Parse(GetSubjectGrade("magyar")) - filteredNativeExamAverage.Value).ToString("F2"))</p>
+                        }
+                        <p><strong>Eltérés (összes):</strong> @(Math.Abs(double.Parse(GetSubjectGrade("magyar")) - NativeExamAverage).ToString("F2"))</p>
                     </div>
                 </div>
             </div>
 
             <h4>Tantárgyi teljesítmény elemzés</h4>
+            <div class="comparison-scope">
+                <p>Összehasonlítva: <strong>@GetComparisonScopeText()</strong></p>
+            </div>
             @foreach (var subject in subjects)
             {
                 <div class="subject-analysis">
@@ -59,8 +95,23 @@
                         <p><strong>Teljesítményszint:</strong> @subjectAnalysis.PerformanceLevelText</p>
                         <p><strong>Saját átlag:</strong> @subjectAnalysis.AverageGrade.ToString("F2")</p>
                         <p><strong>Összes diák átlaga:</strong> @subjectAnalysis.OverallAverage.ToString("F2")</p>
-                        <p><strong>Alsó 25% átlaga:</strong> @subjectAnalysis.BottomQuarterAverage.ToString("F2")</p>
-                        <p><strong>Felső 25% átlaga:</strong> @subjectAnalysis.TopQuarterAverage.ToString("F2")</p>
+
+                        @if (subjectAnalysis.FilteredOverallAverage.HasValue)
+                        {
+                            <p><strong>@GetComparisonScopeText() diákok átlaga:</strong> @subjectAnalysis.FilteredOverallAverage.Value.ToString("F2")</p>
+
+                            @if (filteredStudents.Count > 4) // Csak ha elég adat van a percentilisekhez
+                            {
+                                <p><strong>Szűrt alsó 25% átlaga:</strong> @subjectAnalysis.FilteredBottomQuarterAverage?.ToString("F2")</p>
+                                <p><strong>Szűrt felső 25% átlaga:</strong> @subjectAnalysis.FilteredTopQuarterAverage?.ToString("F2")</p>
+                            }
+                        }
+                        else
+                        {
+                            <p><strong>Alsó 25% átlaga:</strong> @subjectAnalysis.BottomQuarterAverage.ToString("F2")</p>
+                            <p><strong>Felső 25% átlaga:</strong> @subjectAnalysis.TopQuarterAverage.ToString("F2")</p>
+                        }
+
                         @if (!string.IsNullOrEmpty(subjectAnalysis.Suggestion))
                         {
                             <div class="suggestion">
@@ -81,8 +132,40 @@
                     <p><strong>Teljesítményszint:</strong> @overallAnalysis.PerformanceLevelText</p>
                     <p><strong>Saját átlag:</strong> @overallAnalysis.AverageGrade.ToString("F2")</p>
                     <p><strong>Összes diák átlaga:</strong> @overallAnalysis.OverallAverage.ToString("F2")</p>
-                    <p><strong>Alsó 25% átlaga:</strong> @overallAnalysis.BottomQuarterAverage.ToString("F2")</p>
-                    <p><strong>Felső 25% átlaga:</strong> @overallAnalysis.TopQuarterAverage.ToString("F2")</p>
+
+                    @if (overallAnalysis.FilteredOverallAverage.HasValue)
+                    {
+                        <p><strong>@GetComparisonScopeText() diákok átlaga:</strong> @overallAnalysis.FilteredOverallAverage.Value.ToString("F2")</p>
+
+                        @if (filteredStudents.Count > 4) // Csak ha elég adat van a percentilisekhez
+                        {
+                            <p><strong>Szűrt alsó 25% átlaga:</strong> @overallAnalysis.FilteredBottomQuarterAverage?.ToString("F2")</p>
+                            <p><strong>Szűrt felső 25% átlaga:</strong> @overallAnalysis.FilteredTopQuarterAverage?.ToString("F2")</p>
+                        }
+                    }
+                    else
+                    {
+                        <p><strong>Alsó 25% átlaga:</strong> @overallAnalysis.BottomQuarterAverage.ToString("F2")</p>
+                        <p><strong>Felső 25% átlaga:</strong> @overallAnalysis.TopQuarterAverage.ToString("F2")</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison-statistics">
+            <h4>Összehasonlítási statisztikák</h4>
+            <div class="stats-cards">
+                <div class="stats-card">
+                    <h5>Összes diák száma</h5>
+                    <p class="stats-value">@allStudents.Count</p>
+                </div>
+                <div class="stats-card">
+                    <h5>Szűrt diákok száma</h5>
+                    <p class="stats-value">@filteredStudents.Count</p>
+                </div>
+                <div class="stats-card">
+                    <h5>Szűrés alapja</h5>
+                    <p class="stats-value">@GetFilterDescription()</p>
                 </div>
             </div>
         </div>
@@ -97,12 +180,23 @@
     private double RomanianExamAverage;
     private double NativeExamAverage;
 
+    // Szűrt érettségi átlagok
+    private double? filteredMandatoryExamAverage;
+    private double? filteredRomanianExamAverage;
+    private double? filteredNativeExamAverage;
+
     private string[] subjects = new[] { "magyar", "roman", "matematika" };
     private int[] years = new[] { 9, 10, 11, 12 };
     private int[] semesters = new[] { 1, 2 };
 
-    private List<StudentEntry> allStudents;
-    private List<BacRecord> bacRecords;
+    private List<StudentEntry> allStudents = new();
+    private List<StudentEntry> filteredStudents = new();
+    private List<BacRecord> bacRecords = new();
+    private List<BacRecord> filteredBacRecords = new();
+
+    // Szűrési beállítások
+    private bool filterBySameSpecialization;
+    private bool filterBySameSchool;
 
     protected override async Task OnInitializedAsync()
     {
@@ -119,14 +213,101 @@
 
         // Összes diák betöltése az összehasonlításhoz
         allStudents = await StudentSaver.LoadAllAsync();
+        filteredStudents = allStudents.ToList();
 
         // Érettségi átlagok betöltése
         bacRecords = await BacData.GetRecordsAsync();
+        filteredBacRecords = bacRecords.ToList();
 
         // Érettségi átlagok kiszámolása
+        CalculateExamAverages();
+    }
+
+    private void ApplyFilters()
+    {
+        // Alapértelmezetten minden diák
+        filteredStudents = allStudents.ToList();
+
+        // Szűrés szak alapján, ha be van kapcsolva
+        if (filterBySameSpecialization && StudentEntry != null)
+        {
+            filteredStudents = filteredStudents
+                .Where(s => s.Specialization == StudentEntry.Specialization)
+                .ToList();
+        }
+
+        // Szűrés iskola alapján, ha be van kapcsolva
+        if (filterBySameSchool && StudentEntry != null)
+        {
+            filteredStudents = filteredStudents
+                .Where(s => s.School == StudentEntry.School)
+                .ToList();
+        }
+
+        // BAC rekordok szűrése specializáció szerint
+        filteredBacRecords = bacRecords.ToList();
+        if (filterBySameSpecialization && StudentEntry != null)
+        {
+            filteredBacRecords = filteredBacRecords
+                .Where(b => b.Specialization == StudentEntry.Specialization ||
+                           b.SpecializationType == StudentEntry.Specialization)
+                .ToList();
+        }
+
+        // Érettségi átlagok újraszámolása a szűrt adatok alapján
+        CalculateFilteredExamAverages();
+
+        // Komponens frissítése
+        StateHasChanged();
+    }
+
+    private void CalculateExamAverages()
+    {
+        // Teljes érettségi átlagok kiszámolása
         MandatoryExamAverage = bacRecords.Average(r => r.MandatoryGradeFinal);
         RomanianExamAverage = bacRecords.Average(r => r.RomanianGradeFinal);
         NativeExamAverage = bacRecords.Average(r => r.NativeGradeFinal);
+    }
+
+    private void CalculateFilteredExamAverages()
+    {
+        // Szűrt érettségi átlagok kiszámolása, ha van elég rekord
+        if (filteredBacRecords.Count > 0)
+        {
+            filteredMandatoryExamAverage = filteredBacRecords.Average(r => r.MandatoryGradeFinal);
+            filteredRomanianExamAverage = filteredBacRecords.Average(r => r.RomanianGradeFinal);
+            filteredNativeExamAverage = filteredBacRecords.Average(r => r.NativeGradeFinal);
+        }
+        else
+        {
+            filteredMandatoryExamAverage = null;
+            filteredRomanianExamAverage = null;
+            filteredNativeExamAverage = null;
+        }
+    }
+
+    private string GetComparisonScopeText()
+    {
+        if (filterBySameSchool && filterBySameSpecialization)
+            return "Azonos iskolába járó és azonos szakon tanuló diákok";
+        else if (filterBySameSchool)
+            return "Azonos iskolába járó diákok";
+        else if (filterBySameSpecialization)
+            return "Azonos szakon tanuló diákok";
+        else
+            return "Összes diák";
+    }
+
+    private string GetFilterDescription()
+    {
+        if (filterBySameSchool && filterBySameSpecialization)
+            return $"Iskola: {StudentEntry.School}, Szak: {StudentEntry.Specialization}";
+        else if (filterBySameSchool)
+            return $"Iskola: {StudentEntry.School}";
+        else if (filterBySameSpecialization)
+            return $"Szak: {StudentEntry.Specialization}";
+        else
+            return "Nincs aktív szűrő";
     }
 
     private void RedirectToGrades()
@@ -141,8 +322,10 @@
     }
 
     private (double AverageGrade, int PerformanceLevel, string PerformanceLevelText,
-         string Suggestion, double OverallAverage, double BottomQuarterAverage,
-         double TopQuarterAverage) AnalyzeSubjectPerformance(string subject)
+         string Suggestion, double OverallAverage, double? FilteredOverallAverage,
+         double BottomQuarterAverage, double TopQuarterAverage,
+         double? FilteredBottomQuarterAverage, double? FilteredTopQuarterAverage)
+         AnalyzeSubjectPerformance(string subject)
     {
         // Saját jegyek átlaga
         var ownGrades = GetSubjectGrades(StudentEntry, subject);
@@ -153,10 +336,25 @@
             .SelectMany(s => GetSubjectGrades(s, subject))
             .ToList();
 
-        var overallAverage = allStudentsGrades.Average();
-        var percentile = CalculatePercentile(ownAverage, allStudentsGrades);
+        // Szűrt diákok jegyeinek átlaga
+        var filteredStudentsGrades = filteredStudents
+            .Where(s => s.Email != StudentEntry.Email) // Saját magát ne számolja bele
+            .SelectMany(s => GetSubjectGrades(s, subject))
+            .ToList();
 
-        // Alsó és felső negyed átlaga
+        var overallAverage = allStudentsGrades.Average();
+        double? filteredOverallAverage = filteredStudentsGrades.Any()
+            ? filteredStudentsGrades.Average() as double?
+            : null;
+
+        // Percentilis számítás - mindig a megfelelő, szűrt adathalmazon végezzük
+        var dataForPercentile = filteredStudentsGrades.Any() && (filterBySameSchool || filterBySameSpecialization)
+            ? filteredStudentsGrades
+            : allStudentsGrades;
+
+        var percentile = CalculatePercentile(ownAverage, dataForPercentile);
+
+        // Alsó és felső negyed átlaga - teljes adathalmazon
         var sortedGrades = allStudentsGrades.OrderBy(x => x).ToList();
         var bottomQuarterAverage = sortedGrades
             .Take((int)(sortedGrades.Count * 0.25))
@@ -164,6 +362,21 @@
         var topQuarterAverage = sortedGrades
             .Skip((int)(sortedGrades.Count * 0.75))
             .Average();
+
+        // Szűrt adatok alsó és felső negyede (null, ha nincs elég adat)
+        double? filteredBottomQuarterAverage = null;
+        double? filteredTopQuarterAverage = null;
+
+        if (filteredStudentsGrades.Count >= 4) // Csak ha van elég adat a kvartilisek számításához
+        {
+            var sortedFilteredGrades = filteredStudentsGrades.OrderBy(x => x).ToList();
+            filteredBottomQuarterAverage = sortedFilteredGrades
+                .Take((int)(sortedFilteredGrades.Count * 0.25))
+                .Average();
+            filteredTopQuarterAverage = sortedFilteredGrades
+                .Skip((int)(sortedFilteredGrades.Count * 0.75))
+                .Average();
+        }
 
         string performanceLevelText;
         string suggestion = "";
@@ -198,11 +411,14 @@
         }
 
         return (ownAverage, performanceLevel, performanceLevelText, suggestion,
-                overallAverage, bottomQuarterAverage, topQuarterAverage);
+                overallAverage, filteredOverallAverage, bottomQuarterAverage, topQuarterAverage,
+                filteredBottomQuarterAverage, filteredTopQuarterAverage);
     }
 
     private (double AverageGrade, int PerformanceLevel, string PerformanceLevelText,
-             double OverallAverage, double BottomQuarterAverage, double TopQuarterAverage)
+             double OverallAverage, double? FilteredOverallAverage,
+             double BottomQuarterAverage, double TopQuarterAverage,
+             double? FilteredBottomQuarterAverage, double? FilteredTopQuarterAverage)
              AnalyzeOverallPerformance()
     {
         // Összes tantárgy átlaga
@@ -217,10 +433,25 @@
             .SelectMany(s => subjects.SelectMany(subject => GetSubjectGrades(s, subject)))
             .ToList();
 
-        var overallAverage = allStudentsGrades.Average();
-        var percentile = CalculatePercentile(ownAverage, allStudentsGrades);
+        // Szűrt diákok összes jegyének átlaga
+        var filteredStudentsGrades = filteredStudents
+            .Where(s => s.Email != StudentEntry.Email) // Saját magát ne számolja bele
+            .SelectMany(s => subjects.SelectMany(subject => GetSubjectGrades(s, subject)))
+            .ToList();
 
-        // Alsó és felső negyed átlaga
+        var overallAverage = allStudentsGrades.Average();
+        double? filteredOverallAverage = filteredStudentsGrades.Any()
+            ? filteredStudentsGrades.Average() as double?
+            : null;
+
+        // Percentilis számítás - mindig a megfelelő, szűrt adathalmazon végezzük
+        var dataForPercentile = filteredStudentsGrades.Any() && (filterBySameSchool || filterBySameSpecialization)
+            ? filteredStudentsGrades
+            : allStudentsGrades;
+
+        var percentile = CalculatePercentile(ownAverage, dataForPercentile);
+
+        // Alsó és felső negyed átlaga - teljes adathalmazon
         var sortedGrades = allStudentsGrades.OrderBy(x => x).ToList();
         var bottomQuarterAverage = sortedGrades
             .Take((int)(sortedGrades.Count * 0.25))
@@ -228,6 +459,21 @@
         var topQuarterAverage = sortedGrades
             .Skip((int)(sortedGrades.Count * 0.75))
             .Average();
+
+        // Szűrt adatok alsó és felső negyede (null, ha nincs elég adat)
+        double? filteredBottomQuarterAverage = null;
+        double? filteredTopQuarterAverage = null;
+
+        if (filteredStudentsGrades.Count >= 4) // Csak ha van elég adat a kvartilisek számításához
+        {
+            var sortedFilteredGrades = filteredStudentsGrades.OrderBy(x => x).ToList();
+            filteredBottomQuarterAverage = sortedFilteredGrades
+                .Take((int)(sortedFilteredGrades.Count * 0.25))
+                .Average();
+            filteredTopQuarterAverage = sortedFilteredGrades
+                .Skip((int)(sortedFilteredGrades.Count * 0.75))
+                .Average();
+        }
 
         string performanceLevelText;
         int performanceLevel;
@@ -259,7 +505,8 @@
         }
 
         return (ownAverage, performanceLevel, performanceLevelText,
-                overallAverage, bottomQuarterAverage, topQuarterAverage);
+                overallAverage, filteredOverallAverage, bottomQuarterAverage, topQuarterAverage,
+                filteredBottomQuarterAverage, filteredTopQuarterAverage);
     }
 
     private List<double> GetSubjectGrades(StudentEntry student, string subject)
@@ -269,9 +516,16 @@
         {
             foreach (var semester in semesters)
             {
-                if (double.TryParse(student.Grades[year][semester][subject], out double grade))
+                try
                 {
-                    grades.Add(grade);
+                    if (double.TryParse(student.Grades[year][semester][subject], out double grade))
+                    {
+                        grades.Add(grade);
+                    }
+                }
+                catch
+                {
+                    // Ignoláljuk a hibát ha a diáknak nincs adata az adott évfolyamra/félévre/tantárgyra
                 }
             }
         }
@@ -341,7 +595,7 @@
                 {
                 "Sürgősen kérj felzárkóztató foglalkozásokat.",
                 "Fontold meg a korrepetálást."
-                    })
+                            })
                 .ToList();
         }
 
