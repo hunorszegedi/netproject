@@ -114,14 +114,14 @@
     .btn-clear:hover {
         background-color: #c82333;
     }
-/* Üres állapot stílusa /
+/* Üres állapot stílusa */
 .users-container p:first-of-type {
     text-align: center;
     color: #666;
     font-style: italic;
     margin-top: 50px;
 }
-/ Reszponzív dizájn */
+/* Reszponzív dizájn */
 @media (max-width: 600px) {
     .user-list {
         grid-template-columns: 1fr;

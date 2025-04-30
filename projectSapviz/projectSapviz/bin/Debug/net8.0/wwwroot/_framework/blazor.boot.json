@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "projectSapviz",
   "resources": {
-    "hash": "sha256-FLfj/Ikg5EbqEO3Dy2ZlKWMZxKBE+Ra2eKRN2AamMLM=",
+    "hash": "sha256-yrdKDHkxDtv3dppucPxsJk6o+Ro6zHR0IV6eJewLRQ8=",
     "jsModuleNative": {
       "dotnet.native.8.0.8.6nkd17h3gy.js": "sha256-juC5sA7gHTLXFEhAKgdM2/RavswpwCtDfjYGsAz2FXg="
     },
@@ -226,10 +226,10 @@
       "mscorlib.wasm": "sha256-Gz8PyW2/fwihe5ul81OwmRUrU71r+KtbyRw6xlOGD+Q=",
       "netstandard.wasm": "sha256-jMTqIQzoDS810lyhZpMO5eEC36EzntXqSVn+2qwkOMQ=",
       "System.Private.CoreLib.wasm": "sha256-NFj5WE5VLP2LptZIRJCUIc1AMk06FmxpsSILfPISwAw=",
-      "projectSapviz.wasm": "sha256-GZaRzyWgqoigPFYpIZgr3i/pRU/kPATR2qd6eSJovZQ="
+      "projectSapviz.wasm": "sha256-U9N+RubJtPvcgqX526q/qHzGMTf1Sp+u/iEgH/ouj+w="
     },
     "pdb": {
-      "projectSapviz.pdb": "sha256-V/u2lriB6r56D78NM79XMBrw4uLla3DdzGZfnV1KlNY="
+      "projectSapviz.pdb": "sha256-l1t0XpGU0/3sdGggxC+Vrtp/YLtWhUhwznYGsHEyHOk="
     }
   },
   "cacheBootResources": true,

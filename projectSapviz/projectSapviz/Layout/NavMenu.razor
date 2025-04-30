@@ -10,48 +10,55 @@
     </div>
 </div>
 
-<div class="nav-item px-3">
-    <NavLink class="nav-link" href="/data" Match="NavLinkMatch.All">
-        <span class="bi bi-table"></span> Adatok
-    </NavLink>
-</div>
-
-<div>
-    <NavLink class="nav-link" href="/grades">
-        <span class="bi bi-pencil-square" aria-hidden="true"></span> Saját jegyek
-    </NavLink>
-</div>
-
-<div class="nav-item px-3">
-    <NavLink class="nav-link" href="/users" Match="NavLinkMatch.All">
-        <span class="bi bi-table"></span> Bevitt
-    </NavLink>
-</div>
-
-<div class="nav-item px-3">
-    <NavLink class="nav-link" href="/grade-analysis" Match="NavLinkMatch.All">
-        <span class="bi bi-table"></span> Analizis
-    </NavLink>
-</div>
-
-<div class="nav-item px-3">
-    <NavLink class="nav-link" href="/grade-comparison" Match="NavLinkMatch.All">
-        <span class="bi bi-table"></span> Osszehasonlitas
-    </NavLink>
-</div>
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
+        <div class="nav-item">
+            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door" aria-hidden="true"></span> Főoldal
+            </NavLink>
+        </div>
+
+        <div class="nav-item">
+            <NavLink class="nav-link" href="/data" Match="NavLinkMatch.All">
+                <span class="bi bi-database" aria-hidden="true"></span> Adatok
+            </NavLink>
+        </div>
+
+        <div class="nav-item">
+            <NavLink class="nav-link" href="/grades">
+                <span class="bi bi-pencil-square" aria-hidden="true"></span> Saját jegyek
+            </NavLink>
+        </div>
+
+        <div class="nav-item">
+            <NavLink class="nav-link" href="/users" Match="NavLinkMatch.All">
+                <span class="bi bi-people" aria-hidden="true"></span> Beiratkozott diákok
+            </NavLink>
+        </div>
+
+        <div class="nav-item">
+            <NavLink class="nav-link" href="/grade-analysis" Match="NavLinkMatch.All">
+                <span class="bi bi-graph-up" aria-hidden="true"></span> Jegy analízis
+            </NavLink>
+        </div>
+
+        <div class="nav-item">
+            <NavLink class="nav-link" href="/grade-comparison" Match="NavLinkMatch.All">
+                <span class="bi bi-bar-chart" aria-hidden="true"></span> Összehasonlítás
+            </NavLink>
+        </div>
+
         @if (!Auth.IsLoggedIn)
         {
-            <div class="nav-item px-3">
+            <div class="nav-item">
                 <NavLink class="nav-link" href="login" Match="NavLinkMatch.All">
-                    <span class="bi bi-person-circle" aria-hidden="true"></span> Login
+                    <span class="bi bi-person-circle" aria-hidden="true"></span> Bejelentkezés
                 </NavLink>
             </div>
         }
         else
         {
-            <div class="nav-item px-3">
+            <div class="nav-item">
                 <a href="#" class="nav-link" @onclick="Logout">
                     <span class="bi bi-box-arrow-right" aria-hidden="true"></span> Kijelentkezés
                 </a>
@@ -62,7 +69,6 @@
 
 @code {
     private bool collapseNavMenu = true;
-
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
