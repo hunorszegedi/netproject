@@ -14,7 +14,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddSingleton<AuthenticationService>(); // ez maradhat singleton
 builder.Services.AddScoped<BacDataService>(); // <-- ez legyen scoped!
 builder.Services.AddMudServices();
-
+builder.Services.AddSingleton<StudentSaveService>();
 
 await builder.Build().RunAsync();
 

@@ -1112,3 +1112,139 @@ button[b-luhhc04e3x] {
     border-left: 2px solid #4a90e2;
     margin-bottom: 1rem;
 }
+/* /Pages/Users.razor.rz.scp.css */
+.users-container[b-pssbkzyj45] {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .users-container h3[b-pssbkzyj45] {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 1.8rem;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+    }
+
+.user-list[b-pssbkzyj45] {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.user-card[b-pssbkzyj45] {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+    .user-card:hover[b-pssbkzyj45] {
+        transform: scale(1.03);
+    }
+
+    .user-card h4[b-pssbkzyj45] {
+        color: #007bff;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 10px;
+    }
+
+    .user-card p[b-pssbkzyj45] {
+        margin: 8px 0;
+        color: #666;
+    }
+
+.grades-section[b-pssbkzyj45] {
+    margin-top: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+    .grades-section h5[b-pssbkzyj45] {
+        color: #333;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+.year-grades[b-pssbkzyj45] {
+    margin-bottom: 15px;
+    background-color: #f0f0f0;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+    .year-grades h6[b-pssbkzyj45] {
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+.semester-grades[b-pssbkzyj45] {
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+    .semester-grades p[b-pssbkzyj45] {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .semester-grades ul[b-pssbkzyj45] {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .semester-grades li[b-pssbkzyj45] {
+        margin: 5px 0;
+        padding: 5px;
+        background-color: #f4f4f4;
+        border-radius: 4px;
+    }
+
+.actions[b-pssbkzyj45] {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn-clear[b-pssbkzyj45] {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-clear:hover[b-pssbkzyj45] {
+        background-color: #c82333;
+    }
+
+/* Üres állapot stílusa */
+.users-container p:first-of-type[b-pssbkzyj45] {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    margin-top: 50px;
+}
+
+/* Reszponzív dizájn */
+@media (max-width: 600px) {
+    .user-list[b-pssbkzyj45] {
+        grid-template-columns: 1fr;
+    }
+
+    .users-container[b-pssbkzyj45] {
+        padding: 10px;
+    }
+}

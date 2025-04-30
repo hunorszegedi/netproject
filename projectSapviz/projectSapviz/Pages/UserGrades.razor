@@ -1,4 +1,6 @@
 ﻿@page "/grades"
+@inject projectSapviz.Services.StudentSaveService StudentSaver
+@using projectSapviz.Models;
 
 <div class="form-container">
     <h3>Saját féléves jegyek megadása</h3>
@@ -13,6 +15,18 @@
     {
         <div>
             <div class="school-info">
+                <div>
+                    <label>
+                        Név:
+                        <input type="text" @bind="name" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Email:
+                        <input type="email" @bind="email" />
+                    </label>
+                </div>
                 <div>
                     <label>
                         Iskola:
@@ -69,22 +83,20 @@
 
 @code {
     private bool submitted = false;
+    private string name = "";
+    private string email = "";
     private string school = "";
     private string specialization = "";
 
-    // Egyszerű adatszerkezet a jegyek tárolására
     private Dictionary<int, Dictionary<int, Dictionary<string, string>>> grades = new();
-
     private int[] years = new[] { 9, 10, 11, 12 };
     private int[] semesters = new[] { 1, 2 };
 
     protected override void OnInitialized()
     {
-        // Inicializáljuk a jegyeket tároló adatszerkezetet
         foreach (var year in years)
         {
             grades[year] = new Dictionary<int, Dictionary<string, string>>();
-
             foreach (var semester in semesters)
             {
                 grades[year][semester] = new Dictionary<string, string>
@@ -97,23 +109,20 @@
         }
     }
 
-    private void HandleSubmit()
+    private async Task HandleSubmit()
     {
         submitted = true;
 
-        // Kiírjuk az adatokat a konzolra
-        Console.WriteLine($"Iskola: {school}");
-        Console.WriteLine($"Szak: {specialization}");
-
-        foreach (var year in years)
-        {
-            foreach (var semester in semesters)
+        var entry = new StudentEntry
             {
-                Console.WriteLine($"Évfolyam {year}, Félév {semester}:");
-                Console.WriteLine($"  Magyar: {grades[year][semester]["magyar"]}");
-                Console.WriteLine($"  Román: {grades[year][semester]["roman"]}");
-                Console.WriteLine($"  Matematika: {grades[year][semester]["matematika"]}");
-            }
-        }
+                Name = name,
+                Email = email,
+                School = school,
+                Specialization = specialization,
+                Grades = grades
+            };
+
+        await StudentSaver.SaveStudentAsync(entry);
     }
+
 }
