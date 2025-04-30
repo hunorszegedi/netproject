@@ -1,0 +1,61 @@
+﻿@inject AuthenticationService Auth
+@inject NavigationManager Navigation
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">projectSapviz</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="nav-item px-3">
+    <NavLink class="nav-link" href="/data" Match="NavLinkMatch.All">
+        <span class="bi bi-table"></span> Adatok
+    </NavLink>
+</div>
+
+<div>
+    <NavLink class="nav-link" href="/grades">
+        <span class="bi bi-pencil-square" aria-hidden="true"></span> Saját jegyek
+    </NavLink>
+</div>
+
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        @if (!Auth.IsLoggedIn)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="login" Match="NavLinkMatch.All">
+                    <span class="bi bi-person-circle" aria-hidden="true"></span> Login
+                </NavLink>
+            </div>
+        }
+        else
+        {
+            <div class="nav-item px-3">
+                <a href="#" class="nav-link" @onclick="Logout">
+                    <span class="bi bi-box-arrow-right" aria-hidden="true"></span> Kijelentkezés
+                </a>
+            </div>
+        }
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void Logout()
+    {
+        Auth.Logout();
+        Navigation.NavigateTo("/login", forceLoad: true);
+    }
+}

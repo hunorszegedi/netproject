@@ -1,0 +1,119 @@
+﻿@page "/grades"
+
+<div class="form-container">
+    <h3>Saját féléves jegyek megadása</h3>
+
+    @if (submitted)
+    {
+        <div class="success-message">
+            Köszönjük! Az adatok mentésre kerültek (helyileg).
+        </div>
+    }
+    else
+    {
+        <div>
+            <div class="school-info">
+                <div>
+                    <label>
+                        Iskola:
+                        <input type="text" @bind="school" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Szak:
+                        <input type="text" @bind="specialization" />
+                    </label>
+                </div>
+            </div>
+
+            @foreach (var year in years)
+            {
+                <div class="year-block">
+                    <h4>Évfolyam: @year</h4>
+
+                    @foreach (var semester in semesters)
+                    {
+                        <div class="semester-block">
+                            <h5>@semester. félév</h5>
+
+                            <div class="subject-block">
+                                <label>
+                                    <span class="subject-name">Magyar:</span>
+                                    <input type="text" @bind="@grades[year][semester]["magyar"]" />
+                                </label>
+                            </div>
+
+                            <div class="subject-block">
+                                <label>
+                                    <span class="subject-name">Román:</span>
+                                    <input type="text" @bind="@grades[year][semester]["roman"]" />
+                                </label>
+                            </div>
+
+                            <div class="subject-block">
+                                <label>
+                                    <span class="subject-name">Matematika:</span>
+                                    <input type="text" @bind="@grades[year][semester]["matematika"]" />
+                                </label>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+            <button @onclick="HandleSubmit">Beküldés</button>
+        </div>
+    }
+</div>
+
+@code {
+    private bool submitted = false;
+    private string school = "";
+    private string specialization = "";
+
+    // Egyszerű adatszerkezet a jegyek tárolására
+    private Dictionary<int, Dictionary<int, Dictionary<string, string>>> grades = new();
+
+    private int[] years = new[] { 9, 10, 11, 12 };
+    private int[] semesters = new[] { 1, 2 };
+
+    protected override void OnInitialized()
+    {
+        // Inicializáljuk a jegyeket tároló adatszerkezetet
+        foreach (var year in years)
+        {
+            grades[year] = new Dictionary<int, Dictionary<string, string>>();
+
+            foreach (var semester in semesters)
+            {
+                grades[year][semester] = new Dictionary<string, string>
+                    {
+                        ["magyar"] = "",
+                        ["roman"] = "",
+                        ["matematika"] = ""
+                    };
+            }
+        }
+    }
+
+    private void HandleSubmit()
+    {
+        submitted = true;
+
+        // Kiírjuk az adatokat a konzolra
+        Console.WriteLine($"Iskola: {school}");
+        Console.WriteLine($"Szak: {specialization}");
+
+        foreach (var year in years)
+        {
+            foreach (var semester in semesters)
+            {
+                Console.WriteLine($"Évfolyam {year}, Félév {semester}:");
+                Console.WriteLine($"  Magyar: {grades[year][semester]["magyar"]}");
+                Console.WriteLine($"  Román: {grades[year][semester]["roman"]}");
+                Console.WriteLine($"  Matematika: {grades[year][semester]["matematika"]}");
+            }
+        }
+    }
+}

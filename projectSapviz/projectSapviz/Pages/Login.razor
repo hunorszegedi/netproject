@@ -1,0 +1,66 @@
+﻿@page "/"
+@page "/login"
+@layout LoginLayout
+@using projectSapviz.Shared
+@inject AuthenticationService Auth
+@inject NavigationManager Navigation
+
+<div class="login-container">
+  <h3>Bejelentkezés</h3>
+
+  @if (!_loggedIn)
+  {
+    <EditForm Model="_model" OnValidSubmit="HandleLogin">
+      <DataAnnotationsValidator />
+      <ValidationSummary />
+
+      <div class="form-group">
+          <label>Email:</label>
+          <InputText class="form-control" @bind-Value="_model.Email" />
+      </div>
+
+            <div class="form-group">
+                <label>Kód:</label>
+                <InputText type="password" class="form-control" @bind-Value="_model.Code" />
+            </div>
+
+
+      <button type="submit" class="btn btn-primary mt-3">Bejelentkezés</button>
+
+      @if (_loginFailed)
+      {
+          <div class="text-danger mt-2">Érvénytelen email vagy kód!</div>
+      }
+    </EditForm>
+  }
+  else
+  {
+    <p>Átirányítás…</p>
+  }
+</div>
+
+@code {
+  private LoginModel _model = new();
+  private bool _loggedIn;
+  private bool _loginFailed;
+
+  private async Task HandleLogin()
+  {
+    var ok = await Auth.LoginAsync(_model.Email, _model.Code);
+    if (ok)
+    {
+      _loggedIn = true;
+      Navigation.NavigateTo("/home");
+    }
+    else
+    {
+      _loginFailed = true;
+    }
+  }
+
+  public class LoginModel
+  {
+    public string Email { get; set; }
+    public string Code  { get; set; }
+  }
+}

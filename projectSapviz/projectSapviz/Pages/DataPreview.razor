@@ -1,0 +1,198 @@
+﻿@page "/data"
+@using projectSapviz.Services
+@inject BacDataService BacData
+
+<div class="data-page">
+    <h3>Adatok előnézete</h3>
+
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @errorMessage
+        </div>
+    }
+    else if (records == null)
+    {
+        <div class="loading">
+            <span>Adatok betöltése...</span>
+        </div>
+    }
+    else
+    {
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Kód</th>
+                        <th>Iskola</th>
+                        <th>Előző beiratkozás</th>
+                        <th>Oktatási forma</th>
+                        <th>Specializáció</th>
+                        <th>Román szint</th>
+                        <th>Anyanyelv</th>
+                        <th>Idegen nyelv</th>
+                        <th>Nyelvi jegyek</th>
+                        <th>Kötelező tárgy</th>
+                        <th>Választott tárgy</th>
+                        <th>TIC</th>
+                        <th>Átlag</th>
+                        <th>Átment</th>
+                        <th>Anyanyelv szint</th>
+                        <th>Megye</th>
+                        <th>Év</th>
+                        <th>Iskola teljes neve</th>
+                        <th>Város</th>
+                        <th>Közeg</th>
+                        <th>Iskola kód</th>
+                        <th>Magyar név</th>
+                        <th>Város (RO)</th>
+                        <th>Város (HU)</th>
+                        <th>Megye (RO)</th>
+                        <th>Megye (HU)</th>
+                        <th>Iskola típus</th>
+                        <th>Kötelező jegy</th>
+                        <th>Választott jegy</th>
+                        <th>Román jegy</th>
+                        <th>Anyanyelv jegy</th>
+                        <th>Nemzetiség</th>
+                        <th>Specializáció típus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var record in currentRecords)
+                    {
+                        <tr>
+                            <td>@record.Code</td>
+                            <td>@record.School</td>
+                            <td>@(record.PreviousProm ? "Igen" : "Nem")</td>
+                            <td>@record.EducationForm</td>
+                            <td>@record.Specialization</td>
+                            <td>@record.RomanianLevel</td>
+                            <td>@record.NativeSubject</td>
+                            <td>@record.ExtraLanguage</td>
+                            <td>@record.ExtraLanguageGrades</td>
+                            <td>@record.MandatorySubject</td>
+                            <td>@record.ChosenSubject</td>
+                            <td>@record.Tic</td>
+                            <td>@record.Avg.ToString("N2")</td>
+                            <td>@record.Passed</td>
+                            <td>@record.NativeLevel</td>
+                            <td>@record.County</td>
+                            <td>@record.Year</td>
+                            <td>@record.FullSchoolName</td>
+                            <td>@record.City</td>
+                            <td>@(record.Medium ? "Igen" : "Nem")</td>
+                            <td>@record.SchoolCode</td>
+                            <td>@record.NameHu</td>
+                            <td>@record.CityRo</td>
+                            <td>@record.CityHu</td>
+                            <td>@record.CountyRo</td>
+                            <td>@record.CountyHu</td>
+                            <td>@record.SchoolType</td>
+                            <td>@record.MandatoryGradeFinal.ToString("N2")</td>
+                            <td>@record.ChosenGradeFinal.ToString("N2")</td>
+                            <td>@record.RomanianGradeFinal.ToString("N2")</td>
+                            <td>@record.NativeGradeFinal.ToString("N2")</td>
+                            <td>@record.Nationality</td>
+                            <td>@record.SpecializationType</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <span>@GetPaginationText()</span>
+                <div class="pagination-buttons">
+                    <button @onclick="PreviousPage" disabled="@(currentPage == 0)">
+                        &laquo;
+                    </button>
+                    @for (int i = startPage; i <= endPage; i++)
+                    {
+                        var pageNumber = i;
+                        <button class="@(pageNumber == currentPage ? "active" : "")"
+                                @onclick="() => GoToPage(pageNumber)">
+                            @(pageNumber + 1)
+                        </button>
+                    }
+                    <button @onclick="NextPage" disabled="@(currentPage >= totalPages - 1)">
+                        &raquo;
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private List<BacRecord>? records;
+    private List<BacRecord> currentRecords = new();
+    private string? errorMessage;
+    private int pageSize = 10;
+    private int currentPage = 0;
+    private int totalPages => records == null ? 0 : (int)Math.Ceiling(records.Count / (double)pageSize);
+    private int startPage => Math.Max(0, Math.Min(currentPage - 2, totalPages - 5));
+    private int endPage => Math.Min(startPage + 4, totalPages - 1);
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+            records = await BacData.GetRecordsAsync();
+            UpdateCurrentRecords();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+    private void UpdateCurrentRecords()
+    {
+        if (records == null)
+            return;
+
+        currentRecords = records
+            .Skip(currentPage * pageSize)
+            .Take(pageSize)
+            .ToList();
+    }
+
+    private void PreviousPage()
+    {
+        if (currentPage > 0)
+        {
+            currentPage--;
+            UpdateCurrentRecords();
+        }
+    }
+
+    private void NextPage()
+    {
+        if (currentPage < totalPages - 1)
+        {
+            currentPage++;
+            UpdateCurrentRecords();
+        }
+    }
+
+    private void GoToPage(int page)
+    {
+        currentPage = page;
+        UpdateCurrentRecords();
+    }
+
+    private string GetPaginationText()
+    {
+        if (records == null || records.Count == 0)
+            return "Nincs megjeleníthető adat";
+
+        int start = currentPage * pageSize + 1;
+        int end = Math.Min(start + pageSize - 1, records.Count);
+        return $"{start}-{end} / {records.Count} rekord";
+    }
+}

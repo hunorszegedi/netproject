@@ -1,0 +1,22 @@
+﻿@page "/home"
+@inject AuthenticationService Auth
+
+@if (!string.IsNullOrWhiteSpace(userEmail))
+{
+    <h1>Welcome back, @userEmail!</h1>
+    <p>Örülünk, hogy visszatértél!</p>
+}
+else
+{
+    <h1>Nem vagy bejelentkezve.</h1>
+    <p>Kérlek, <a href="/login">jelentkezz be</a>.</p>
+}
+
+@code {
+    private string? userEmail;
+
+    protected override void OnInitialized()
+    {
+        userEmail = Auth.CurrentUser;
+    }
+}

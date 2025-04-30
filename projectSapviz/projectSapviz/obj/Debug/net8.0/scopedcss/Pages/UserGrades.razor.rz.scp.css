@@ -1,0 +1,104 @@
+/* Alap konténer */
+.form-container[b-luhhc04e3x] {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #f7f9fc;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Címek */
+h3[b-luhhc04e3x] {
+    color: #1c3d5a;
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+h4[b-luhhc04e3x] {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #2c5aa0;
+}
+
+h5[b-luhhc04e3x] {
+    font-style: italic;
+    color: #436eae;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Bemeneti mezők */
+input[type="text"][b-luhhc04e3x] {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.2s ease;
+}
+
+    input[type="text"]:focus[b-luhhc04e3x] {
+        outline: none;
+        border-color: #4a90e2;
+        box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
+    }
+
+/* Label-ek és tárgy mezők */
+label[b-luhhc04e3x] {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+}
+
+.subject-name[b-luhhc04e3x] {
+    width: 100px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* Beküldés gomb */
+button[b-luhhc04e3x] {
+    background-color: #1c3d5a;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: background-color 0.2s ease;
+}
+
+    button:hover[b-luhhc04e3x] {
+        background-color: #0f2b42;
+    }
+
+/* Sikerüzenet */
+.success-message[b-luhhc04e3x] {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    border-radius: 4px;
+}
+
+/* Blokk elrendezések */
+.school-info[b-luhhc04e3x] {
+    margin-bottom: 2rem;
+}
+
+.year-block[b-luhhc04e3x] {
+    margin-bottom: 2rem;
+}
+
+.semester-block[b-luhhc04e3x] {
+    padding-left: 1rem;
+    border-left: 2px solid #4a90e2;
+    margin-bottom: 1rem;
+}
