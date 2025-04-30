@@ -1,5 +1,6 @@
 ﻿@page "/grades"
 @inject projectSapviz.Services.StudentSaveService StudentSaver
+@inject BacDataService BacData
 @using projectSapviz.Models;
 
 <div class="form-container">
@@ -9,34 +10,54 @@
     {
         <div class="success-message">
             Köszönjük! Az adatok mentésre kerültek (helyileg).
+            <button @onclick="ShowAnalysis">Eredmények elemzése</button>
         </div>
     }
     else
     {
         <div>
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="error-message">
+                    @errorMessage
+                </div>
+            }
+
             <div class="school-info">
                 <div>
                     <label>
                         Név:
-                        <input type="text" @bind="name" />
+                        <input type="text" @bind="name" required />
                     </label>
                 </div>
                 <div>
                     <label>
                         Email:
-                        <input type="email" @bind="email" />
+                        <input type="email" @bind="email" required />
                     </label>
                 </div>
                 <div>
                     <label>
                         Iskola:
-                        <input type="text" @bind="school" />
+                        <select @bind="school" required>
+                            <option value="">Válasszon iskolát</option>
+                            @foreach (var uniqueSchool in uniqueSchools)
+                            {
+                                <option value="@uniqueSchool">@uniqueSchool</option>
+                            }
+                        </select>
                     </label>
                 </div>
                 <div>
                     <label>
                         Szak:
-                        <input type="text" @bind="specialization" />
+                        <select @bind="specialization" required>
+                            <option value="">Válasszon szakot</option>
+                            @foreach (var uniqueSpecialization in uniqueSpecializations)
+                            {
+                                <option value="@uniqueSpecialization">@uniqueSpecialization</option>
+                            }
+                        </select>
                     </label>
                 </div>
             </div>
@@ -55,6 +76,7 @@
                                 <label>
                                     <span class="subject-name">Magyar:</span>
                                     <input type="text" @bind="@grades[year][semester]["magyar"]" />
+                                    <span class="grade-note">1-10 közötti érték</span>
                                 </label>
                             </div>
 
@@ -62,6 +84,7 @@
                                 <label>
                                     <span class="subject-name">Román:</span>
                                     <input type="text" @bind="@grades[year][semester]["roman"]" />
+                                    <span class="grade-note">1-10 közötti érték</span>
                                 </label>
                             </div>
 
@@ -69,6 +92,7 @@
                                 <label>
                                     <span class="subject-name">Matematika:</span>
                                     <input type="text" @bind="@grades[year][semester]["matematika"]" />
+                                    <span class="grade-note">1-10 közötti érték</span>
                                 </label>
                             </div>
                         </div>
@@ -79,21 +103,34 @@
             <button @onclick="HandleSubmit">Beküldés</button>
         </div>
     }
+
+    @if (showAnalysis)
+    {
+        <GradeComparison StudentEntry="savedEntry" />
+    }
 </div>
 
 @code {
     private bool submitted = false;
+    private bool showAnalysis = false;
+    private string errorMessage = "";
+    private StudentEntry savedEntry;
     private string name = "";
     private string email = "";
     private string school = "";
     private string specialization = "";
 
+    // Egyedi iskolák és specializációk listája
+    private List<string> uniqueSchools = new();
+    private List<string> uniqueSpecializations = new();
+
     private Dictionary<int, Dictionary<int, Dictionary<string, string>>> grades = new();
     private int[] years = new[] { 9, 10, 11, 12 };
     private int[] semesters = new[] { 1, 2 };
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        // Adatok inicializálása
         foreach (var year in years)
         {
             grades[year] = new Dictionary<int, Dictionary<string, string>>();
@@ -107,22 +144,108 @@
                     };
             }
         }
+
+        // Érettségi adatok betöltése
+        var bacRecords = await BacData.GetRecordsAsync();
+
+        // Egyedi iskolák és specializációk kinyerése
+        uniqueSchools = bacRecords
+            .Select(r => r.School)
+            .Distinct()
+            .OrderBy(s => s)
+            .ToList();
+
+        uniqueSpecializations = bacRecords
+            .Select(r => r.Specialization)
+            .Distinct()
+            .OrderBy(s => s)
+            .ToList();
     }
 
     private async Task HandleSubmit()
     {
+        // Alapvető adatok validációja
+        if (string.IsNullOrWhiteSpace(name) || 
+            string.IsNullOrWhiteSpace(email) || 
+            string.IsNullOrWhiteSpace(school) || 
+            string.IsNullOrWhiteSpace(specialization))
+        {
+            errorMessage = "Kérjük, töltse ki az összes személyes adatot!";
+            return;
+        }
+
+        // Email validáció egyszerű módon
+        if (!IsValidEmail(email))
+        {
+            errorMessage = "Kérjük, adjon meg egy érvényes email-címet!";
+            return;
+        }
+
+        // Jegyek validációja
+        var invalidGrades = new List<string>();
+        foreach (var year in years)
+        {
+            foreach (var semester in semesters)
+            {
+                if (!IsValidGrade(grades[year][semester]["magyar"]))
+                    invalidGrades.Add($"{year}. évf {semester}. félév Magyar");
+                
+                if (!IsValidGrade(grades[year][semester]["roman"]))
+                    invalidGrades.Add($"{year}. évf {semester}. félév Román");
+                
+                if (!IsValidGrade(grades[year][semester]["matematika"]))
+                    invalidGrades.Add($"{year}. évf {semester}. félév Matematika");
+            }
+        }
+
+        if (invalidGrades.Any())
+        {
+            errorMessage = "Érvénytelen jegyek a következő mezőkben:\n" + 
+                string.Join("\n", invalidGrades) + 
+                "\nKérjük, 1-10 közötti egész számokat adjon meg minden tantárgyból!";
+            return;
+        }
+
+        // Ha minden rendben, törli a hibaüzenetet
+        errorMessage = "";
+
+        // Mentés
         submitted = true;
 
-        var entry = new StudentEntry
-            {
-                Name = name,
-                Email = email,
-                School = school,
-                Specialization = specialization,
-                Grades = grades
-            };
+        savedEntry = new StudentEntry
+        {
+            Name = name,
+            Email = email,
+            School = school,
+            Specialization = specialization,
+            Grades = grades
+        };
 
-        await StudentSaver.SaveStudentAsync(entry);
+        await StudentSaver.SaveStudentAsync(savedEntry);
     }
 
+    private bool IsValidGrade(string grade)
+    {
+        return !string.IsNullOrWhiteSpace(grade) && 
+               int.TryParse(grade, out int result) && 
+               result >= 1 && result <= 10;
+    }
+
+    private bool IsValidEmail(string email)
+    {
+        try 
+        {
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == email;
+        }
+        catch 
+        {
+            return false;
+        }
+    }
+
+    private void ShowAnalysis()
+    {
+        showAnalysis = true;
+    }
 }

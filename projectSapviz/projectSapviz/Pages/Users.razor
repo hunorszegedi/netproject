@@ -5,7 +5,6 @@
 
 <div class="users-container">
     <h3>Beiratkozott diákok</h3>
-
     @if (students == null || students.Count == 0)
     {
         <p>Még nem kerültek diákok felvételre.</p>
@@ -13,14 +12,13 @@
     else
     {
         <div class="user-list">
-            @foreach (var student in students)
+            @foreach (var student in currentPageStudents)
             {
                 <div class="user-card">
                     <h4>@student.Name</h4>
                     <p><strong>Email:</strong> @student.Email</p>
                     <p><strong>Iskola:</strong> @student.School</p>
                     <p><strong>Szak:</strong> @student.Specialization</p>
-
                     <div class="grades-section">
                         <h5>Jegyek</h5>
                         @foreach (var yearEntry in student.Grades)
@@ -35,7 +33,7 @@
                                             @foreach (var subjectEntry in semesterEntry.Value)
                                             {
                                                 <li>
-                                                    <strong>@subjectEntry.Key:</strong> 
+                                                    <strong>@subjectEntry.Key:</strong>
                                                     @(string.IsNullOrEmpty(subjectEntry.Value) ? "Nincs megadva" : subjectEntry.Value)
                                                 </li>
                                             }
@@ -47,6 +45,12 @@
                     </div>
                 </div>
             }
+        </div>
+
+        <div class="pagination">
+            <button @onclick="PreviousPage" disabled="@(currentPage == 1)">Előző</button>
+            <span>@currentPage / @totalPages</span>
+            <button @onclick="NextPage" disabled="@(currentPage == totalPages)">Következő</button>
         </div>
     }
 
@@ -60,6 +64,14 @@
 
 @code {
     private List<StudentEntry> students = new();
+    private int currentPage = 1;
+    private int itemsPerPage = 2;
+    private int totalPages => (int)Math.Ceiling((double)students.Count / itemsPerPage);
+
+    private List<StudentEntry> currentPageStudents => students
+        .Skip((currentPage - 1) * itemsPerPage)
+        .Take(itemsPerPage)
+        .ToList();
 
     protected override async Task OnInitializedAsync()
     {
@@ -67,16 +79,31 @@
         students = await StudentSaver.LoadAllAsync();
     }
 
+    private void NextPage()
+    {
+        if (currentPage < totalPages)
+        {
+            currentPage++;
+        }
+    }
+
+    private void PreviousPage()
+    {
+        if (currentPage > 1)
+        {
+            currentPage--;
+        }
+    }
+
     private async Task ClearAllStudents()
     {
         // Megerősítés kérése
         bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", new object[] { "Biztosan törölni szeretnéd az összes diákot?" });
-
-
         if (confirmed)
         {
             await StudentSaver.ClearAllStudentsAsync();
             students.Clear();
+            currentPage = 1;
         }
     }
 }

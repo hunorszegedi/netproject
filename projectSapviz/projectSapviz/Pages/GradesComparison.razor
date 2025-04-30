@@ -1,0 +1,353 @@
+﻿@page "/grade-comparison"
+@inject projectSapviz.Services.StudentSaveService StudentSaver
+@inject BacDataService BacData
+@inject NavigationManager NavigationManager
+@using projectSapviz.Models
+@using System.Collections.Concurrent
+
+<div class="grade-comparison-container">
+    <h3>Jegyeid elemzése</h3>
+
+    @if (StudentEntry == null)
+    {
+        <p>Nincs betöltött diák adat. Kérjük, előbb vigye fel a jegyeit.</p>
+        <button class="redirect-button" @onclick="RedirectToGrades">Jegyek felvétele</button>
+    }
+    else
+    {
+        <div class="comparison-results">
+            <div class="student-info">
+                <h4>Diák adatok</h4>
+                <p><strong>Név:</strong> @StudentEntry.Name</p>
+                <p><strong>Iskola:</strong> @StudentEntry.School</p>
+                <p><strong>Szak:</strong> @StudentEntry.Specialization</p>
+            </div>
+
+            <div class="bac-average-comparison">
+                <h4>Érettségi átlagok összehasonlítása</h4>
+                <div class="bac-averages">
+                    <div class="bac-average-card">
+                        <h5>Kötelező tárgy (Matematika)</h5>
+                        <p><strong>Saját jegy:</strong> @GetSubjectGrade("matematika")</p>
+                        <p><strong>Érettségi átlag:</strong> @MandatoryExamAverage.ToString("F2")</p>
+                        <p><strong>Eltérés:</strong> @(Math.Abs(double.Parse(GetSubjectGrade("matematika")) - MandatoryExamAverage).ToString("F2"))</p>
+                    </div>
+                    <div class="bac-average-card">
+                        <h5>Román nyelv</h5>
+                        <p><strong>Saját jegy:</strong> @GetSubjectGrade("roman")</p>
+                        <p><strong>Érettségi átlag:</strong> @RomanianExamAverage.ToString("F2")</p>
+                        <p><strong>Eltérés:</strong> @(Math.Abs(double.Parse(GetSubjectGrade("roman")) - RomanianExamAverage).ToString("F2"))</p>
+                    </div>
+                    <div class="bac-average-card">
+                        <h5>Anyanyelv (Magyar)</h5>
+                        <p><strong>Saját jegy:</strong> @GetSubjectGrade("magyar")</p>
+                        <p><strong>Érettségi átlag:</strong> @NativeExamAverage.ToString("F2")</p>
+                        <p><strong>Eltérés:</strong> @(Math.Abs(double.Parse(GetSubjectGrade("magyar")) - NativeExamAverage).ToString("F2"))</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Tantárgyi teljesítmény elemzés</h4>
+            @foreach (var subject in subjects)
+            {
+                <div class="subject-analysis">
+                    <h5>@subject.ToUpper() teljesítmény</h5>
+                    @{
+                        var subjectAnalysis = AnalyzeSubjectPerformance(subject);
+                    }
+                    <div class="performance-card @GetPerformanceClass(subjectAnalysis.PerformanceLevel)">
+                        <p><strong>Teljesítményszint:</strong> @subjectAnalysis.PerformanceLevelText</p>
+                        <p><strong>Saját átlag:</strong> @subjectAnalysis.AverageGrade.ToString("F2")</p>
+                        <p><strong>Összes diák átlaga:</strong> @subjectAnalysis.OverallAverage.ToString("F2")</p>
+                        <p><strong>Alsó 25% átlaga:</strong> @subjectAnalysis.BottomQuarterAverage.ToString("F2")</p>
+                        <p><strong>Felső 25% átlaga:</strong> @subjectAnalysis.TopQuarterAverage.ToString("F2")</p>
+                        @if (!string.IsNullOrEmpty(subjectAnalysis.Suggestion))
+                        {
+                            <div class="suggestion">
+                                <h6>Javítási javaslatok:</h6>
+                                <p>@subjectAnalysis.Suggestion</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <div class="overall-performance">
+                <h4>Összteljesítmény</h4>
+                @{
+                    var overallAnalysis = AnalyzeOverallPerformance();
+                }
+                <div class="performance-card @GetPerformanceClass(overallAnalysis.PerformanceLevel)">
+                    <p><strong>Teljesítményszint:</strong> @overallAnalysis.PerformanceLevelText</p>
+                    <p><strong>Saját átlag:</strong> @overallAnalysis.AverageGrade.ToString("F2")</p>
+                    <p><strong>Összes diák átlaga:</strong> @overallAnalysis.OverallAverage.ToString("F2")</p>
+                    <p><strong>Alsó 25% átlaga:</strong> @overallAnalysis.BottomQuarterAverage.ToString("F2")</p>
+                    <p><strong>Felső 25% átlaga:</strong> @overallAnalysis.TopQuarterAverage.ToString("F2")</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public StudentEntry StudentEntry { get; set; }
+
+    private double MandatoryExamAverage;
+    private double RomanianExamAverage;
+    private double NativeExamAverage;
+
+    private string[] subjects = new[] { "magyar", "roman", "matematika" };
+    private int[] years = new[] { 9, 10, 11, 12 };
+    private int[] semesters = new[] { 1, 2 };
+
+    private List<StudentEntry> allStudents;
+    private List<BacRecord> bacRecords;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Ha nincs StudentEntry paraméter átadva, próbáljuk betölteni az utolsó mentett diákot
+        if (StudentEntry == null)
+        {
+            var students = await StudentSaver.LoadAllAsync();
+            if (students.Any())
+            {
+                // Az utoljára mentett diák betöltése
+                StudentEntry = students.LastOrDefault();
+            }
+        }
+
+        // Összes diák betöltése az összehasonlításhoz
+        allStudents = await StudentSaver.LoadAllAsync();
+
+        // Érettségi átlagok betöltése
+        bacRecords = await BacData.GetRecordsAsync();
+
+        // Érettségi átlagok kiszámolása
+        MandatoryExamAverage = bacRecords.Average(r => r.MandatoryGradeFinal);
+        RomanianExamAverage = bacRecords.Average(r => r.RomanianGradeFinal);
+        NativeExamAverage = bacRecords.Average(r => r.NativeGradeFinal);
+    }
+
+    private void RedirectToGrades()
+    {
+        NavigationManager.NavigateTo("/grades");
+    }
+
+    private string GetSubjectGrade(string subject)
+    {
+        // A 12. évfolyam 2. félévi jegy lekérése
+        return StudentEntry.Grades[12][2][subject];
+    }
+
+    private (double AverageGrade, int PerformanceLevel, string PerformanceLevelText,
+         string Suggestion, double OverallAverage, double BottomQuarterAverage,
+         double TopQuarterAverage) AnalyzeSubjectPerformance(string subject)
+    {
+        // Saját jegyek átlaga
+        var ownGrades = GetSubjectGrades(StudentEntry, subject);
+        var ownAverage = ownGrades.Average();
+
+        // Összes diák jegyeinek átlaga ugyanebből a tantárgyból
+        var allStudentsGrades = allStudents
+            .SelectMany(s => GetSubjectGrades(s, subject))
+            .ToList();
+
+        var overallAverage = allStudentsGrades.Average();
+        var percentile = CalculatePercentile(ownAverage, allStudentsGrades);
+
+        // Alsó és felső negyed átlaga
+        var sortedGrades = allStudentsGrades.OrderBy(x => x).ToList();
+        var bottomQuarterAverage = sortedGrades
+            .Take((int)(sortedGrades.Count * 0.25))
+            .Average();
+        var topQuarterAverage = sortedGrades
+            .Skip((int)(sortedGrades.Count * 0.75))
+            .Average();
+
+        string performanceLevelText;
+        string suggestion = "";
+        int performanceLevel;
+
+        if (percentile >= 90)
+        {
+            performanceLevelText = "Kiváló (Top 10%)";
+            performanceLevel = 5;
+        }
+        else if (percentile >= 75)
+        {
+            performanceLevelText = "Jó (Top 25%)";
+            performanceLevel = 4;
+        }
+        else if (percentile >= 50)
+        {
+            performanceLevelText = "Átlagos (Top 50%)";
+            performanceLevel = 3;
+        }
+        else if (percentile >= 25)
+        {
+            performanceLevelText = "Fejlesztendő (Alsó 50%)";
+            performanceLevel = 2;
+            suggestion = GenerateSuggestion(subject, false);
+        }
+        else
+        {
+            performanceLevelText = "Gyenge teljesítmény (Alsó 25%)";
+            performanceLevel = 1;
+            suggestion = GenerateSuggestion(subject, true);
+        }
+
+        return (ownAverage, performanceLevel, performanceLevelText, suggestion,
+                overallAverage, bottomQuarterAverage, topQuarterAverage);
+    }
+
+    private (double AverageGrade, int PerformanceLevel, string PerformanceLevelText,
+             double OverallAverage, double BottomQuarterAverage, double TopQuarterAverage)
+             AnalyzeOverallPerformance()
+    {
+        // Összes tantárgy átlaga
+        var allGrades = subjects
+            .SelectMany(subject => GetSubjectGrades(StudentEntry, subject))
+            .ToList();
+
+        var ownAverage = allGrades.Average();
+
+        // Összes diák összes jegyének átlaga
+        var allStudentsGrades = allStudents
+            .SelectMany(s => subjects.SelectMany(subject => GetSubjectGrades(s, subject)))
+            .ToList();
+
+        var overallAverage = allStudentsGrades.Average();
+        var percentile = CalculatePercentile(ownAverage, allStudentsGrades);
+
+        // Alsó és felső negyed átlaga
+        var sortedGrades = allStudentsGrades.OrderBy(x => x).ToList();
+        var bottomQuarterAverage = sortedGrades
+            .Take((int)(sortedGrades.Count * 0.25))
+            .Average();
+        var topQuarterAverage = sortedGrades
+            .Skip((int)(sortedGrades.Count * 0.75))
+            .Average();
+
+        string performanceLevelText;
+        int performanceLevel;
+
+        if (percentile >= 90)
+        {
+            performanceLevelText = "Kiváló (Top 10%)";
+            performanceLevel = 5;
+        }
+        else if (percentile >= 75)
+        {
+            performanceLevelText = "Jó (Top 25%)";
+            performanceLevel = 4;
+        }
+        else if (percentile >= 50)
+        {
+            performanceLevelText = "Átlagos (Top 50%)";
+            performanceLevel = 3;
+        }
+        else if (percentile >= 25)
+        {
+            performanceLevelText = "Fejlesztendő (Alsó 50%)";
+            performanceLevel = 2;
+        }
+        else
+        {
+            performanceLevelText = "Gyenge teljesítmény (Alsó 25%)";
+            performanceLevel = 1;
+        }
+
+        return (ownAverage, performanceLevel, performanceLevelText,
+                overallAverage, bottomQuarterAverage, topQuarterAverage);
+    }
+
+    private List<double> GetSubjectGrades(StudentEntry student, string subject)
+    {
+        var grades = new List<double>();
+        foreach (var year in years)
+        {
+            foreach (var semester in semesters)
+            {
+                if (double.TryParse(student.Grades[year][semester][subject], out double grade))
+                {
+                    grades.Add(grade);
+                }
+            }
+        }
+        return grades;
+    }
+
+    private double CalculatePercentile(double value, List<double> data)
+    {
+        if (!data.Any()) return 0;
+
+        // Rendezzük a jegyeket csökkenő sorrendbe
+        var sortedData = data.OrderByDescending(x => x).ToList();
+
+        // Számoljuk meg, hány érték van a saját értéke felett
+        var higherCount = sortedData.Count(x => x > value);
+
+        // Percentilis számítás (minél magasabb az érték, annál jobb a helyezés)
+        return ((sortedData.Count - higherCount) / (double)sortedData.Count) * 100;
+    }
+
+    private string GetPerformanceClass(int performanceLevel)
+    {
+        return performanceLevel switch
+        {
+            5 => "performance-excellent",
+            4 => "performance-good",
+            3 => "performance-average",
+            2 => "performance-needs-improvement",
+            1 => "performance-poor",
+            _ => ""
+        };
+    }
+
+    private string GenerateSuggestion(string subject, bool isWeak)
+    {
+        var suggestions = new Dictionary<string, List<string>>
+            {
+                ["magyar"] = new List<string>
+        {
+            "Több olvasással javíthatod a szövegértést.",
+            "Rendszeresen gyakorold a helyesírást.",
+            "Olvass több szakirodalmat és szépirodalmat.",
+            "Vegyél részt irodalmi szakkörökön."
+        },
+                ["roman"] = new List<string>
+        {
+            "Nézz román nyelvű filmeket felirattal.",
+            "Használj nyelvoktató alkalmazásokat.",
+            "Kommunikálj román anyanyelvűekkel.",
+            "Tanulj rendszeresen szókincset és nyelvtant."
+        },
+                ["matematika"] = new List<string>
+        {
+            "Old meg a példákat lépésről lépésre.",
+            "Használj online matematikai oktató videókat.",
+            "Gyakorolj rendszeresen és folyamatosan.",
+            "Kérj segítséget tanáraidtól plusz órákban."
+        }
+            };
+
+        var specificSuggestions = suggestions[subject];
+
+        if (isWeak)
+        {
+            specificSuggestions = specificSuggestions
+                .Concat(new[]
+                {
+                "Sürgősen kérj felzárkóztató foglalkozásokat.",
+                "Fontold meg a korrepetálást."
+                    })
+                .ToList();
+        }
+
+        // Véletlenszerűen válasszon 2 javaslatot
+        var random = new Random();
+        return string.Join(" ",
+            specificSuggestions.OrderBy(x => random.Next()).Take(2));
+    }
+}

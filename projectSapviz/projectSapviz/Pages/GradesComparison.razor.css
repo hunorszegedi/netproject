@@ -1,0 +1,216 @@
+﻿.grade-comparison-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .grade-comparison-container h3 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 1.8rem;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+    }
+
+.student-info {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .student-info h4 {
+        color: #007bff;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 10px;
+    }
+
+    .student-info p {
+        margin: 10px 0;
+        color: #555;
+    }
+
+.bac-average-comparison {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .bac-average-comparison h4 {
+        text-align: center;
+        color: #007bff;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 10px;
+    }
+
+.bac-averages {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bac-average-card {
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    padding: 15px;
+    width: 30%;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+    .bac-average-card:hover {
+        transform: scale(1.05);
+    }
+
+    .bac-average-card h5 {
+        color: #007bff;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 5px;
+    }
+
+    .bac-average-card p {
+        margin: 8px 0;
+        color: #555;
+    }
+
+        .bac-average-card p strong {
+            color: #333;
+        }
+
+.subject-analysis {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .subject-analysis h5 {
+        color: #007bff;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 10px;
+    }
+
+.performance-card {
+    padding: 15px;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+    .performance-card:hover {
+        transform: scale(1.02);
+    }
+
+    .performance-card p {
+        margin: 10px 0;
+        color: #333;
+    }
+
+.suggestion {
+    background-color: #f9f9f9;
+    border-left: 4px solid #007bff;
+    padding: 10px;
+    margin-top: 15px;
+}
+
+    .suggestion h6 {
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+.overall-performance {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .overall-performance h4 {
+        color: #007bff;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 10px;
+    }
+
+.redirect-button {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+    .redirect-button:hover {
+        background-color: #218838;
+        transform: scale(1.05);
+    }
+
+/* Teljesítményszint színek */
+.performance-excellent {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.performance-good {
+    background-color: #e2f0d9;
+    border: 1px solid #d6d8d9;
+    color: #212529;
+}
+
+.performance-average {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+}
+
+.performance-needs-improvement {
+    background-color: #fff0f0;
+    border: 1px solid #ffd6d6;
+    color: #721c24;
+}
+
+.performance-poor {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+/* Reszponzív dizájn */
+@media (max-width: 768px) {
+    .grade-comparison-container {
+        padding: 10px;
+    }
+
+    .bac-averages {
+        flex-direction: column;
+    }
+
+    .bac-average-card {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .subject-analysis, .overall-performance, .student-info, .bac-average-comparison {
+        padding: 15px;
+    }
+
+    .performance-card {
+        font-size: 0.9rem;
+    }
+}

@@ -1,0 +1,235 @@
+﻿@page "/grade-analysis"
+@inject projectSapviz.Services.StudentSaveService StudentSaver
+@using projectSapviz.Models
+@using System.Collections.Concurrent
+
+<div class="grade-analysis-container">
+    <h3>Jegyátlagok elemzése</h3>
+
+    @if (students == null || students.Count == 0)
+    {
+        <p>Még nem kerültek diákok felvételre.</p>
+    }
+    else
+    {
+        <div class="analysis-results">
+            <h4>Féléves és éves átlagok tantárgyanként</h4>
+            <table class="grade-table">
+                <thead>
+                    <tr>
+                        <th>Tantárgy</th>
+                        @foreach (var year in years)
+                        {
+                            @foreach (var semester in semesters)
+                            {
+                                <th>@year. évf @semester. félév</th>
+                            }
+                        }
+                        @foreach (var year in years)
+                        {
+                            <th>@year. évf átlag</th>
+                        }
+                        <th>Végleges átlag</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var subject in subjects)
+                    {
+                        <tr>
+                            <td>@subject</td>
+                            @foreach (var year in years)
+                            {
+                                @foreach (var semester in semesters)
+                                {
+                                    <td>@GetSubjectAverage(subject, year, semester)</td>
+                                }
+                            }
+                            @foreach (var year in years)
+                            {
+                                <td>@GetYearlySubjectAverage(subject, year)</td>
+                            }
+                            <td>@GetFinalSubjectAverage(subject)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="summary-stats">
+                <h4>Összesített statisztikák</h4>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h5>Legmagasabb átlag</h5>
+                        <p>@GetHighestOverallAverage()</p>
+                    </div>
+                    <div class="stat-card">
+                        <h5>Legalacsonyabb átlag</h5>
+                        <p>@GetLowestOverallAverage()</p>
+                    </div>
+                    <div class="stat-card">
+                        <h5>Teljes átlag</h5>
+                        <p>@GetOverallAverage()</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private List<StudentEntry> students = new();
+    private int[] years = new[] { 9, 10, 11, 12 };
+    private int[] semesters = new[] { 1, 2 };
+    private string[] subjects = new[] { "magyar", "roman", "matematika" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Diákok betöltése
+        students = await StudentSaver.LoadAllAsync();
+    }
+
+    private string GetSubjectAverage(string subject, int year, int semester)
+    {
+        // Csak numerikus jegyeket veszünk figyelembe
+        var validGrades = students
+            .Select(s => s.Grades[year][semester][subject])
+            .Where(grade => int.TryParse(grade, out _))
+            .Select(grade => int.Parse(grade))
+            .ToList();
+
+        if (!validGrades.Any()) return "N/A";
+
+        var average = validGrades.Average();
+        return average.ToString("F2");
+    }
+
+    private string GetYearlySubjectAverage(string subject, int year)
+    {
+        // Éves átlag számítása mindkét félévből
+        var validGrades = new List<int>();
+
+        foreach (var semester in semesters)
+        {
+            var semesterGrades = students
+                .Select(s => s.Grades[year][semester][subject])
+                .Where(grade => int.TryParse(grade, out _))
+                .Select(grade => int.Parse(grade))
+                .ToList();
+
+            validGrades.AddRange(semesterGrades);
+        }
+
+        if (!validGrades.Any()) return "N/A";
+
+        var average = validGrades.Average();
+        return average.ToString("F2");
+    }
+
+    private string GetFinalSubjectAverage(string subject)
+    {
+        // Végleges átlag számítása mind a négy évfolyamból
+        var finalGrades = new List<double>();
+
+        foreach (var year in years)
+        {
+            var yearGrades = new List<int>();
+            foreach (var semester in semesters)
+            {
+                var semesterGrades = students
+                    .Select(s => s.Grades[year][semester][subject])
+                    .Where(grade => int.TryParse(grade, out _))
+                    .Select(grade => int.Parse(grade))
+                    .ToList();
+
+                yearGrades.AddRange(semesterGrades);
+            }
+
+            if (yearGrades.Any())
+            {
+                finalGrades.Add(yearGrades.Average());
+            }
+        }
+
+        if (!finalGrades.Any()) return "N/A";
+
+        var finalAverage = finalGrades.Average();
+        return finalAverage.ToString("F2");
+    }
+
+    private string GetHighestOverallAverage()
+    {
+        var allAverages = new List<double>();
+
+        foreach (var subject in subjects)
+        {
+            foreach (var year in years)
+            {
+                foreach (var semester in semesters)
+                {
+                    var validGrades = students
+                        .Select(s => s.Grades[year][semester][subject])
+                        .Where(grade => int.TryParse(grade, out _))
+                        .Select(grade => int.Parse(grade))
+                        .ToList();
+
+                    if (validGrades.Any())
+                    {
+                        allAverages.Add(validGrades.Average());
+                    }
+                }
+            }
+        }
+
+        return allAverages.Any() ? allAverages.Max().ToString("F2") : "N/A";
+    }
+
+    private string GetLowestOverallAverage()
+    {
+        var allAverages = new List<double>();
+
+        foreach (var subject in subjects)
+        {
+            foreach (var year in years)
+            {
+                foreach (var semester in semesters)
+                {
+                    var validGrades = students
+                        .Select(s => s.Grades[year][semester][subject])
+                        .Where(grade => int.TryParse(grade, out _))
+                        .Select(grade => int.Parse(grade))
+                        .ToList();
+
+                    if (validGrades.Any())
+                    {
+                        allAverages.Add(validGrades.Average());
+                    }
+                }
+            }
+        }
+
+        return allAverages.Any() ? allAverages.Min().ToString("F2") : "N/A";
+    }
+
+    private string GetOverallAverage()
+    {
+        var allGrades = new List<int>();
+
+        foreach (var subject in subjects)
+        {
+            foreach (var year in years)
+            {
+                foreach (var semester in semesters)
+                {
+                    var validGrades = students
+                        .Select(s => s.Grades[year][semester][subject])
+                        .Where(grade => int.TryParse(grade, out _))
+                        .Select(grade => int.Parse(grade))
+                        .ToList();
+
+                    allGrades.AddRange(validGrades);
+                }
+            }
+        }
+
+        return allGrades.Any() ? allGrades.Average().ToString("F2") : "N/A";
+    }
+}

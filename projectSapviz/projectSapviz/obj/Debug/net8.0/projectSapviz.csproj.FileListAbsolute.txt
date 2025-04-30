@@ -1126,3 +1126,5 @@ C:\Users\Vivobook\Desktop\project\projectSapviz\projectSapviz\obj\Debug\net8.0\c
 C:\Users\Vivobook\Desktop\project\projectSapviz\projectSapviz\obj\Debug\net8.0\compressed\degjj34ohl.gz
 C:\Users\Vivobook\Desktop\project\projectSapviz\projectSapviz\obj\Debug\net8.0\compressed\b3lzkoi1wk.gz
 C:\Users\Vivobook\Desktop\project\projectSapviz\projectSapviz\obj\Debug\net8.0\scopedcss\Pages\Users.razor.rz.scp.css
+C:\Users\Vivobook\Desktop\project\projectSapviz\projectSapviz\obj\Debug\net8.0\scopedcss\Pages\GradeAnalysis.razor.rz.scp.css
+C:\Users\Vivobook\Desktop\project\projectSapviz\projectSapviz\obj\Debug\net8.0\scopedcss\Pages\GradesComparison.razor.rz.scp.css
