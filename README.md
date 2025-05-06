@@ -47,10 +47,10 @@ A SapViz egy innovatív Blazor WebAssembly alkalmazás, amely segít a diákokna
 
 ```bash
 # Klónozás
-git clone https://github.com/hunorszegedi/SapViz.git
+git clone https://github.com/hunorszegedi/netproject.git
 
 # Belépés a projektkönyvtárba
-cd SapViz
+cd netproject
 
 # Függőségek telepítése
 dotnet restore
