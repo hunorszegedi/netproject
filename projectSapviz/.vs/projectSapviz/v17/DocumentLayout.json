@@ -3,8 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\pages\\gradescomparison.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\pages\\gradescomparison.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\models\\bacrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\models\\bacrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\services\\studentsaveservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\services\\studentsaveservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\services\\bacdataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\services\\bacdataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\services\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\services\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\pages\\usergrades.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\pages\\usergrades.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\pages\\usergrades.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|solutionrelative:projectsapviz\\pages\\usergrades.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AAD34362-16CD-449D-B75F-09376839EBD6}|projectSapviz\\projectSapviz.csproj|c:\\users\\vivobook\\desktop\\project\\projectsapviz\\projectsapviz\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -35,19 +67,123 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "GradesComparison.razor",
+              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\GradesComparison.razor",
+              "RelativeDocumentMoniker": "projectSapviz\\Pages\\GradesComparison.razor",
+              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\GradesComparison.razor",
+              "RelativeToolTip": "projectSapviz\\Pages\\GradesComparison.razor",
+              "ViewState": "AgIAAH0BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-06T05:19:02.321Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BacRecord.cs",
+              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Models\\BacRecord.cs",
+              "RelativeDocumentMoniker": "projectSapviz\\Models\\BacRecord.cs",
+              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Models\\BacRecord.cs",
+              "RelativeToolTip": "projectSapviz\\Models\\BacRecord.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T05:17:22.14Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "projectSapviz\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "projectSapviz\\Layout\\MainLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-06T05:17:12.19Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Login.razor",
+              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\Login.razor",
+              "RelativeDocumentMoniker": "projectSapviz\\Pages\\Login.razor",
+              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\Login.razor",
+              "RelativeToolTip": "projectSapviz\\Pages\\Login.razor",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-06T05:01:25.966Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "StudentSaveService.cs",
+              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Services\\StudentSaveService.cs",
+              "RelativeDocumentMoniker": "projectSapviz\\Services\\StudentSaveService.cs",
+              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Services\\StudentSaveService.cs",
+              "RelativeToolTip": "projectSapviz\\Services\\StudentSaveService.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAADwvz0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-05T19:45:07.691Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BacDataService.cs",
+              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Services\\BacDataService.cs",
+              "RelativeDocumentMoniker": "projectSapviz\\Services\\BacDataService.cs",
+              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Services\\BacDataService.cs",
+              "RelativeToolTip": "projectSapviz\\Services\\BacDataService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-05T19:45:06.131Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserGrades.razor",
+              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\UserGrades.razor",
+              "RelativeDocumentMoniker": "projectSapviz\\Pages\\UserGrades.razor",
+              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\UserGrades.razor",
+              "RelativeToolTip": "projectSapviz\\Pages\\UserGrades.razor",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAE4AAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-05T19:44:57.552Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "UserGrades.razor.css",
+              "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\UserGrades.razor.css",
+              "RelativeDocumentMoniker": "projectSapviz\\Pages\\UserGrades.razor.css",
+              "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\UserGrades.razor.css",
+              "RelativeToolTip": "projectSapviz\\Pages\\UserGrades.razor.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-05-05T19:44:54.775Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "AuthenticationService.cs",
               "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Services\\AuthenticationService.cs",
               "RelativeDocumentMoniker": "projectSapviz\\Services\\AuthenticationService.cs",
               "ToolTip": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Services\\AuthenticationService.cs",
               "RelativeToolTip": "projectSapviz\\Services\\AuthenticationService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-30T15:08:47.753Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 10,
               "Title": "Home.razor.css",
               "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\Home.razor.css",
               "RelativeDocumentMoniker": "projectSapviz\\Pages\\Home.razor.css",
@@ -55,12 +191,11 @@
               "RelativeToolTip": "projectSapviz\\Pages\\Home.razor.css",
               "ViewState": "AgIAADQAAAAAAAAAAAAqwD8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-04-30T15:02:16.249Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T15:02:16.249Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 9,
               "Title": "Home.razor",
               "DocumentMoniker": "C:\\Users\\Vivobook\\Desktop\\project\\projectSapviz\\projectSapviz\\Pages\\Home.razor",
               "RelativeDocumentMoniker": "projectSapviz\\Pages\\Home.razor",
@@ -68,8 +203,7 @@
               "RelativeToolTip": "projectSapviz\\Pages\\Home.razor",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-30T15:01:58.33Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T15:01:58.33Z"
             }
           ]
         }
